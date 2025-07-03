@@ -1,1 +1,1 @@
-# -Postify-Blog-Posting-Platform
+# Postify-Blog-Posting-Platform
