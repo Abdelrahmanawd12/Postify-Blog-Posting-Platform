@@ -1,0 +1,111 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid">
+    <!-- Brand/logo -->
+    <a class="navbar-brand fw-bold" [routerLink]="['/home']" >
+      <i class="fa-solid fa-blog me-2"></i> {{getText('Postify')}}
+    </a>
+
+    <!-- Mobile toggle button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Main navigation links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" [routerLink]="['/home']"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa-solid fa-house me-1"></i> {{getText('home')}}
+          </a>
+        </li>
+
+        @if(!isLoggedIn()) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">
+              <i class="fa-solid fa-right-to-bracket me-1"></i> {{getText('login')}}
+            </a>
+          </li>
+        } @else {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/account']" routerLinkActive="active">
+              <i class="fa-solid fa-user me-1"></i> {{getText('account')}}
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/addpost']" routerLinkActive="active">
+              <i class="fa-solid fa-plus me-1"></i>{{getText('addPost')}}
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()" style="cursor: pointer;">
+              <i class="fa-solid fa-right-from-bracket me-1"></i> {{getText('logout')}}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <!-- Right-aligned elements -->
+      <div class="d-flex align-items-center flex-column flex-lg-row gap-3">
+        <!-- Search bar -->
+        <div class="position-relative search-container">
+          <input class="form-control pe-5" type="text"
+                 [placeholder]="getText('searchPlaceholder')"
+                 #input
+                 (input)="searchByTitleAndTag(input.value)"
+                 (keyup.enter)="input.value && searchByTitleAndTag(input.value)">
+          <i class="fa-solid fa-magnifying-glass position-absolute end-0 top-50 translate-middle-y me-3 text-secondary"></i>
+          <span class="position-absolute end-0 top-50 translate-middle-y me-3 text-danger"
+                style="cursor: pointer;"
+                *ngIf="input.value"
+                (click)="input.value=''; RemoveSearch()">
+            &times;
+          </span>
+        </div>
+
+        <!-- Language switcher -->
+        <button class="btn btn-outline-primary btn-sm" (click)="ChangeLanguage()">
+          <i class="fa-solid fa-language me-1"></i> {{getText('changeLang')}}
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Search results dropdown -->
+@if(searchedPosts && searchedPosts.length > 0) {
+  <div class="container-fluid px-0">
+    <div class="search-results-dropdown shadow-lg rounded-bottom">
+      @for(p of searchedPosts; track p.id) {
+        <div class="search-result-item p-3 border-bottom">
+          <a [routerLink]="['/posts', p.id]" class="text-decoration-none text-reset">
+            <div class="d-flex">
+              @if(p.imageUrl) {
+                <div class="flex-shrink-0 me-3">
+                  <img [src]="p.imageUrl" class="img-thumbnail" style="width: 80px; height: 60px; object-fit: cover;">
+                </div>
+              }
+              <div class="flex-grow-1">
+                <h6 class="mb-1 fw-bold">{{p.title}}</h6>
+                <p class="mb-1 text-muted small">{{p.body }}</p>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                  @for(tag of p.tags; track tag) {
+                    <span class="badge bg-light text-dark border small">{{tag}}</span>
+                  }
+                </div>
+                <div class="d-flex gap-3 mt-2 small">
+                  <span class="text-success"><i class="fa-solid fa-thumbs-up"></i> {{p.reactions.likes}}</span>
+                  <span class="text-danger"><i class="fa-solid fa-thumbs-down"></i> {{p.reactions.dislikes}}</span>
+                  <span class="text-primary"><i class="fa-solid fa-eye"></i> {{p.views}}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+}
+

@@ -1,0 +1,13 @@
+<div [dir]="dir" class="main-content">
+  <!-- Sticky navbar -->
+  <div class="sticky-top">
+    <app-navbar *ngIf="showNavbar"></app-navbar>
+  </div>
+
+  <!-- Rest of your content -->
+  <div class="content-below-navbar">
+    <!-- <h1>{{language$|async }}</h1> -->
+    <app-spinner></app-spinner>
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,218 @@
+
+<div class="container m-5">
+<form [formGroup]="UpdatedUserForm">
+  <h1>{{ UpdatedUserForm.value | json }}</h1>
+<!-- first name -->
+   <div class="mb-3">
+    <label for="firstName" class="form-label">First Name</label>
+    <input type="text" class="form-control" id="firstName" formControlName="firstName" name="firstName"
+           placeholder="Enter your first name">
+  </div>
+  <!-- Validation messages for first name -->
+   @if (firstName?.touched) {
+          @if(firstName?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                First name is required.
+              </div>
+            }
+            @if(firstName?.errors?.['pattern']) {
+              <div class="alert alert-danger" role="alert">
+                First name must be at least 3 characters long.
+              </div>
+            }
+   }
+
+
+<!-- maiden name -->
+   <div class="mb-3">
+    <label for="maidenName" class="form-label">Maiden Name</label>
+    <input type="text" class="form-control" id="maidenName" formControlName="maidenName" name="maidenName"
+           placeholder="Enter your maiden name">
+  </div>
+    @if (maidenName?.touched) {
+          @if(maidenName?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Maiden name is required.
+              </div>
+            }
+            @if(maidenName?.errors?.['pattern']) {
+              <div class="alert alert-danger" role="alert">
+                Maiden name must be at least 3 characters long.
+              </div>
+            }
+   }
+<!-- last name -->
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name</label>
+    <input type="text" class="form-control" id="lastName" formControlName="lastName" name="lastName"
+           placeholder="Enter your last name">
+  </div>
+    @if (lastName?.touched) {
+          @if(lastName?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Last  name is required.
+              </div>
+            }
+            @if(lastName?.errors?.['pattern']) {
+              <div class="alert alert-danger" role="alert">
+                Last name must be at least 3 characters long.
+              </div>
+            }
+   }
+  <!-- age -->
+  <div class="mb-3">
+    <label for="age" class="form-label">Age</label>
+    <input type="number" class="form-control" id="age" formControlName="age" name="age"
+           placeholder="Enter your age">
+  </div>
+  @if (age?.touched) {
+          @if(age?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Age is required.
+              </div>
+            }
+   }
+  <!-- gender -->
+  <div class="mb-3">
+    <label for="gender" class="form-label">Gender</label>
+    <select class="form-select" id="gender" formControlName="gender" name="gender" >
+      <option value="">Select your gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  @if (gender?.touched) {
+          @if(gender?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Gender is required.
+              </div>
+            }
+   }
+  <!-- phone -->
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone Number</label>
+    <input type="text" class="form-control" id="phone" formControlName="phone" name="phone"
+           placeholder="Enter your phone number">
+  </div>
+  @if (phone?.touched) {
+          @if(phone?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Phone number is required.
+              </div>
+            }
+            @if(phone?.errors?.['pattern']) {
+              <div class="alert alert-danger" role="alert">
+                Phone number must be a valid format like <span style="font-weight: bold; color:red ;">+123 456 7890</span>.
+              </div>
+            }
+   }
+<!-- email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" formControlName="email" name="email"
+            placeholder="Enter your email"
+            aria-describedby="emailHelp">
+    </div>
+  @if (email?.touched) {
+          @if(email?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Email is required.
+              </div>
+            }
+            @if(email?.errors?.['email']) {
+              <div class="alert alert-danger" role="alert">
+                Please enter a valid email address.
+              </div>
+            }
+    }
+  <!-- username -->
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" formControlName="username" name="username"
+           placeholder="Enter your username">
+  </div>
+@if(username?.touched) {
+          @if(username?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Username is required.
+              </div>
+            }
+            @if(username?.errors?.['pattern']) {
+              <div class="alert alert-danger" role="alert">
+                Username must be at least 3 characters long.
+              </div>
+            }
+   }
+
+
+
+<!-- password -->
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password"
+    formControlName="password" name="password"
+  placeholder="Enter your password">
+  </div>
+@if(password?.touched) {
+          @if(password?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Password is required.
+              </div>
+            }
+            @if(password?.errors?.['pattern']) {
+              <div class="alert alert-danger" role="alert">
+                Password must be at least 6 characters long and include uppercase letters, lowercase letters, numbers, and special characters.
+              </div>
+            }
+   }
+<!-- address -->
+ <div formGroupName="address" class="mb-3">
+  <!-- address -->
+  <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <input type="text" class="form-control" id="address"
+    formControlName="address" name="address"
+  placeholder="Enter your address">
+  </div>
+  @if (address?.touched) {
+          @if(address?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                Address is required.
+              </div>
+            }
+   }
+  <!-- city -->
+  <div class="mb-3">
+    <label for="city" class="form-label">City</label>
+    <input type="text" class="form-control" id="city"
+    formControlName="city" name="city"
+    placeholder="Enter your city">
+  </div>
+  @if (city?.touched) {
+          @if(city?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                City is required.
+              </div>
+            }
+   }
+  <!-- state -->
+  <div class="mb-3">
+    <label for="state" class="form-label">State</label>
+    <input type="text" class="form-control" id="state"
+    formControlName="state" name="state"
+    placeholder="Enter your state">
+  </div>
+  @if (state?.touched) {
+          @if(state?.errors?.['required']) {
+              <div class="alert alert-danger" role="alert">
+                State is required.
+              </div>
+            }
+   }
+
+  </div>
+  <button type="button" class="btn btn-secondary w-100 mt-2" [disabled]="!UpdatedUserForm.valid" (click)="Update()" >Updated</button>
+
+</form>
+</div>

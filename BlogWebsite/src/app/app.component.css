@@ -1,0 +1,19 @@
+/* Global styles */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1020; /* Bootstrap uses 1030 for its sticky navbar, so we use slightly lower */
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-below-navbar {
+  flex: 1;
+  padding-top: 20px; /* Add some space below the navbar */
+}
+
+/* If you're using Bootstrap, you can use their utility classes instead */

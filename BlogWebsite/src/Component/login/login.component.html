@@ -1,0 +1,53 @@
+<div class="facebook-login-container">
+  <div class="login-wrapper">
+    <div class="login-header">
+      <div class="d-flex align-items-center justify-content-center mb-3">
+       <h1 class="logo-text">POSTIFY</h1><i class="fa-solid fa-blog me-2"></i>
+
+      </div>
+      <p class="tagline">Discover the world with POSTIFY.</p>
+    </div>
+
+    <div class="login-card">
+      <form #form="ngForm" class="login-form">
+        <div class="form-group">
+          <input type="email" class="form-control" id="exampleInputEmail1" #email="ngModel"
+                 name="email" required [(ngModel)]="userLogin.email"
+                 placeholder="Email address">
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control" id="exampleInputPassword1"
+                 #password="ngModel" name="password" required [(ngModel)]="userLogin.password"
+                 placeholder="Password">
+        </div>
+
+        <button type="submit" class="btn-login" [disabled]="!form.valid" (click)="Logoin()">
+          Log In
+        </button>
+<!--
+        <div class="forgot-password">
+          <a href="#">Forgot password?</a>
+        </div> -->
+
+        <div class="remember-me">
+          <label class="checkbox-container">
+            <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe">
+            <span class="checkmark"></span>
+            Keep me logged in
+          </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <button type="button" class="btn-create-account" [routerLink]="['/signup']">
+          Create New Account
+        </button>
+      </form>
+    </div>
+
+    <!-- <div class="create-page">
+      <a href="#">Create a Page</a> for a celebrity, brand or business.
+    </div> -->
+  </div>
+</div>

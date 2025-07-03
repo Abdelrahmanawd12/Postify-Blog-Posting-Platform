@@ -1,0 +1,116 @@
+<form [formGroup]="addPostForm" class="post-form">
+  <div class="form-container">
+    <h2 class="form-title">{{ getText('createNewPost') }}</h2>
+
+    <div class="form-group">
+      <label for="title">{{ getText('Title') }}</label>
+      <input
+        type="text"
+        id="title"
+        placeholder="{{ getText('enter_post_title') }}"
+        formControlName="title"
+        name="title"
+        class="form-control"
+        [ngClass]="{'is-invalid': title.invalid && title.touched}"
+      >
+
+      @if(title.invalid && title.touched) {
+        @if(title.errors?.['required']) {
+          <div class="invalid-feedback">{{ getText('Titleisrequired') }}</div>
+        }
+        @if(title.errors?.['minlength']) {
+          <div class="invalid-feedback">{{ getText('Title_must_be_at_least_2_characters_long') }}</div>
+        }
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="body">{{ getText('PostContent') }}</label>
+      <textarea
+        id="body"
+        placeholder="{{ getText('write_a_post_congtent_here') }}"
+        formControlName="body"
+        name="body"
+        class="form-control"
+        rows="5"
+        [ngClass]="{'is-invalid': body.invalid && body.touched}"
+      ></textarea>
+
+      @if(body.invalid && body.touched) {
+        @if(body.errors?.['required']) {
+          <div class="invalid-feedback">{{ getText('Body_is_required') }}</div>
+        }
+        @if(body.errors?.['minlength']) {
+          <div class="invalid-feedback">{{ getText('Body_must_be_at_least_5_characters_long') }}</div>
+        }
+      }
+    </div>
+
+    <div class="form-group" formArrayName="tags">
+      <label>{{ getText('tags') }}</label>
+      <div class="tags-container">
+        @for(tag of tags.controls; track i; let i = $index) {
+          <div class="tag-input-group">
+            <input
+              [formControlName]="i"
+              placeholder="{{ getText('add_a_tag') }}"
+              class="form-control tag-input"
+              [ngClass]="{'is-invalid': tag.invalid && tag.touched}"
+            >
+            @if(i > 0) {
+              <button type="button" class="btn btn-remove" (click)="removeTag(i)">
+                <i class="fas fa-minus"></i>
+              </button>
+            }
+            @if(i === tags.controls.length - 1) {
+              <button type="button" class="btn btn-add" (click)="addTag()">
+                <i class="fas fa-plus"></i>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image-upload">{{ getText('uploadimage') }}</label>
+      <div class="file-upload-wrapper">
+        <input
+          type="file"
+          id="image-upload"
+          (change)="onFileSelected($event)"
+          class="file-upload-input"
+          accept="image/*"
+        >
+        <label for="image-upload" class="file-upload-label">
+          <i class="fas fa-cloud-upload-alt"></i> {{ getText('chose_a_image') }}
+        </label>
+      </div>
+    </div>
+
+    @if(previewUrl) {
+      <div class="image-preview">
+        <p class="preview-label">{{ getText('imagePreview') }}:</p>
+        <img [src]="previewUrl" alt="Image preview" class="preview-image">
+        <button class="btn btn-danger mt-2" (click)="removeImage()">{{ getText('removeimage') }}</button>
+      </div>
+    }
+
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-submit"
+        [disabled]="addPostForm.invalid"
+        (click)="uploadImageAndSubmitPost()"
+      >
+      {{ getText('publisPost') }}
+      </button>
+    </div>
+
+
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="close()">{{ getText('cancel') }}</button>
+      </div>
+  </div>
+</form>

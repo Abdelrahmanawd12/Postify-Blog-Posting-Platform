@@ -1,0 +1,122 @@
+<div class="account-container">
+  <!-- Main content area for posts -->
+  <div class="posts-column">
+    <h1 class="posts-title">Your Posts</h1>
+
+    <div class="posts-grid">
+      @for(p of posts; track p.id) {
+      <div class="post-card">
+        <div class="card-body">
+          <!-- User info -->
+          <div class="user-info">
+            <img class="user-avatar" [src]="user.image" alt="User avatar">
+            <span class="user-name">{{user.firstName}} {{user.lastName}}</span>
+          </div>
+
+          <!-- Post content -->
+          <h5 class="post-title">{{p.title}}</h5>
+          <p class="post-text">{{p.body}}</p>
+
+          <!-- Post image -->
+          @if(p.imageUrl) {
+            <div class="post-image-container">
+              <img class="post-image" [src]="p.imageUrl" alt="Post image">
+            </div>
+          }
+
+          <!-- Post stats -->
+          <div class="post-stats">
+            <span class="stat-item"><i class="fa-regular fa-thumbs-up"></i> {{p.reactions.likes}}</span>
+            <span class="stat-item"><i class="fa-regular fa-thumbs-down"></i> {{p.reactions.dislikes}}</span>
+            <span class="stat-item"><i class="fa-regular fa-eye"></i> {{p.views}}</span>
+            @if(p.IsUpdated) {
+              <span class="badge updated-badge">Updated</span>
+            }
+          </div>
+
+          <!-- Action buttons -->
+          <div class="post-actions">
+            <button class="btn btn-update" (click)="updatePost(p.id)">
+              <i class="fa-regular fa-pen-to-square"></i> Edit
+            </button>
+            <button class="btn btn-delete" (click)="deletePost(p.id)">
+              <i class="fa-regular fa-trash-can"></i> Delete
+            </button>
+            <button class="btn btn-view" (click)="viewPost(p.id)">
+              <i class="fa-regular fa-eye"></i> View
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Fixed account info sidebar -->
+  <div class="account-sidebar ">
+    <div class="account-profile">
+      <h2 class="account-title">Account Info</h2>
+      <div class="account-avatar-container">
+        @if(user.image) {
+          <img class="account-avatar" [src]="user.image" alt="User avatar">
+        } @else {
+          <img class="account-avatar" src="assets/default-avatar.png" alt="Default avatar">
+        }
+
+      </div>
+
+      <div class="account-details">
+        <div class="account-detail">
+          <span class="detail-label">Name:</span>
+          <span class="detail-value">{{user.firstName}} {{user.lastName}}</span>
+        </div>
+
+        <div class="account-detail">
+          <span class="detail-label">Username:</span>
+          <span class="detail-value">{{user.username}}</span>
+        </div>
+
+        <div class="account-detail">
+          <span class="detail-label">Email:</span>
+          <span class="detail-value">{{user.email}}</span>
+        </div>
+
+        <div class="account-detail">
+          <span class="detail-label">Phone:</span>
+          <span class="detail-value">{{user.phone}}</span>
+        </div>
+
+        <div class="account-detail">
+          <span class="detail-label">Location:</span>
+          <span class="detail-value">{{user.address.city}}, {{user.address.state}}</span>
+        </div>
+      </div>
+
+      <button class="btn btn-edit-profile" (click)="goToUpdateUser(user.id)">
+        <i class="fa-regular fa-pen-to-square"></i> Edit Profile
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true" #confirmModal>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold">Remove</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-4">
+        <p class="mb-0" id="modalMessage"></p>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger px-4" (click)="confirmModalAction()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

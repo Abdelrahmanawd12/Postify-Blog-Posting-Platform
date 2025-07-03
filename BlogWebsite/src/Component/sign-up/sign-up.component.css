@@ -1,0 +1,242 @@
+/* Main container */
+.facebook-signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* background-color: #f0f2f5; */
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 20px;
+}
+
+/* Wrapper for all content */
+.signup-wrapper {
+  max-width: 980px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Header with logo and tagline */
+.signup-header {
+  text-align: center;
+  max-width: 500px;
+}
+
+.logo-text {
+  color: #333;
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  letter-spacing: -1px;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  color: #1c1e21;
+  margin-top: 10px;
+}
+
+/* Signup card */
+.signup-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.signup-title {
+  font-size: 1.5rem;
+  color: #1c1e21;
+  text-align: center;
+  margin: 0 0 5px;
+}
+
+.signup-subtitle {
+  color: #606770;
+  text-align: center;
+  margin: 0 0 20px;
+  font-size: 0.9375rem;
+}
+
+.divider {
+  height: 1px;
+  background-color: #dadde1;
+  margin: 15px 0;
+}
+
+/* Form elements */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.name-fields {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ccd0d5;
+  border-radius: 5px;
+  font-size: 15px;
+  background: #f5f6f7;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #1877f2;
+  box-shadow: 0 0 0 2px #e7f3ff;
+  outline: none;
+}
+
+.form-group input.invalid,
+.form-group select.invalid {
+  border-color: #fa3e3e;
+}
+
+.error-message {
+  color: #fa3e3e;
+  font-size: 0.75rem;
+  margin-top: 5px;
+  line-height: 1.3;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* File upload */
+.file-upload {
+  position: relative;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload-btn {
+  background-color: #f5f6f7;
+  border: 1px solid #ccd0d5;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 0.9375rem;
+  color: #4b4f56;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.upload-btn:hover {
+  background-color: #ebedf0;
+}
+
+.image-preview {
+  margin-top: 10px;
+}
+
+.image-preview img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Signup button */
+.signup-btn {
+  background-color: #00a400;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.125rem;
+  font-weight: bold;
+  padding: 8px;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.signup-btn:hover {
+  background-color: #008c00;
+}
+
+.signup-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.terms-notice {
+  color: #777;
+  font-size: 0.6875rem;
+  text-align: center;
+  margin: 15px 0 0;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  .signup-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo-text {
+    font-size: 3rem;
+  }
+
+  .tagline {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .name-fields {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logo-text {
+    font-size: 2.5rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .signup-card {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .facebook-signup-container {
+    padding: 10px;
+  }
+
+  .logo-text {
+    font-size: 2rem;
+  }
+}
