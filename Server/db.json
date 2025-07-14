@@ -1,0 +1,160 @@
+{
+  "users": [
+    {
+      "id": "ce77",
+      "firstName": "awad",
+      "lastName": "awad",
+      "maidenName": "Mohamed",
+      "age": 24,
+      "gender": "male",
+      "email": "abdelrahmanawad155@gmail.com",
+      "image": "https://i.ibb.co/23k0m8T9/R.jpg",
+      "phone": "+112 121 1212",
+      "username": "awad@awaddaaa",
+      "password": "Abdo153$",
+      "address": {
+        "address": " Egypt /maadi / street 233",
+        "city": "mahalla",
+        "state": "Egypt"
+      },
+      "postsLiked": [
+        "8",
+        "13",
+        "19",
+        "22",
+        "21",
+        "3",
+        "4abb",
+        "15",
+        "d151",
+        "2",
+        "f5a8",
+        "2f0a",
+        "89a3",
+        "0797",
+        "78c3",
+        "27",
+        "da23"
+      ],
+      "PostsDisLiked": [
+        "3",
+        "1",
+        "15",
+        "2",
+        "27"
+      ]
+    },
+    {
+      "email": "blabla@mail.com",
+      "password": "$2a$10$ALcXJO0/ONuBzfnYnZ.wSehocjSS.lzlqP1APIlGHnNNueG4no0oy",
+      "phone": "01094960532",
+      "username": "bla_bla",
+      "firstName": "",
+      "lastName": "",
+      "maidenName": "",
+      "age": "",
+      "gender": "",
+      "image": "",
+      "address": {
+        "address": "",
+        "city": "",
+        "state": ""
+      },
+      "postsLiked": [],
+      "PostsDisLiked": [],
+      "id": "sKylFOv"
+    },
+    {
+      "email": "Abdo123@mail.com",
+      "password": "$2a$10$YjuuA16Dba/33lAMzriAJep1AU/ed0aqJPVvY.UZ08tUqFQ8xViZu",
+      "phone": "01094960532",
+      "username": "Abdo_123",
+      "firstName": "Mohamed",
+      "lastName": "",
+      "maidenName": "",
+      "age": "",
+      "gender": "",
+      "image": "",
+      "address": {
+        "address": "",
+        "city": "",
+        "state": ""
+      },
+      "postsLiked": [
+        "e749",
+        "CrNG5MG"
+      ],
+      "PostsDisLiked": [
+        "e749"
+      ],
+      "id": "bLFakjr"
+    },
+    {
+      "email": "bodeawad155@gmail.com",
+      "password": "$2a$10$xxvzHa7GT70m5KmdSsGN2OhZDD3/mnYZ7777MWYT1Bmpv7BAdb69e",
+      "phone": "01094960532",
+      "username": "Abdo_awad",
+      "firstName": "",
+      "lastName": "",
+      "maidenName": "",
+      "age": "",
+      "gender": "",
+      "image": "",
+      "address": {
+        "address": "",
+        "city": "",
+        "state": ""
+      },
+      "postsLiked": [],
+      "PostsDisLiked": [],
+      "id": "3KJ6w7_"
+    }
+  ],
+  "posts": [
+    {
+      "id": "e749",
+      "title": "new post",
+      "body": "bla bla ",
+      "tags": [
+        "english"
+      ],
+      "reactions": {
+        "likes": 1,
+        "dislikes": 2
+      },
+      "views": 2,
+      "userId": "sKylFOv",
+      "imageUrl": "https://i.ibb.co/G3BDVbL2/download-1.jpg"
+    },
+    {
+      "title": "dmlksdm",
+      "body": "mdnmdk",
+      "tags": [
+        "english"
+      ],
+      "reactions": {
+        "likes": 0,
+        "dislikes": 0
+      },
+      "views": 1,
+      "userId": "bLFakjr",
+      "imageUrl": "",
+      "id": "lomf0Ae"
+    },
+    {
+      "title": "mmdskdmks",
+      "body": ",dsm,dms",
+      "tags": [
+        "English"
+      ],
+      "reactions": {
+        "likes": 0,
+        "dislikes": 0
+      },
+      "views": 1,
+      "userId": "bLFakjr",
+      "imageUrl": "",
+      "id": "1eZElon"
+    }
+  ]
+}

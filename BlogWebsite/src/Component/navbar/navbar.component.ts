@@ -9,6 +9,7 @@ import { LanguageAction } from '../../Store/Language/Language.Action';
 import { Observable } from 'rxjs';
 import { LanguageService } from '../../Services/language.service';
 import { ModalService } from '../../Services/modal.service';
+import { ToastService } from '../../Services/toast.service';
 
 @Component({
   selector: 'app-navbar',
@@ -26,7 +27,7 @@ constructor(private loginService: LoginService,
   private postsServices:PostsService,
     private Translator:LanguageService,
     private router:Router,
-    private modal:ModalService    ,
+    private modal:ModalService    , private toast:ToastService,
   private store:Store<{language: 'en' | 'ar'}>
 ) {
 this.language$=store.select("language");
@@ -50,14 +51,19 @@ this.store.dispatch(LanguageAction({lang:(this.currentlang==="en")?"ar":"en"}))
   isLoggedIn(): boolean {
     return this.loginService.isLoggedIn();
   }
-
+confirmModalAction() {
+  this.modal.confirm();
+}
 
   logout(): void {
-   if(window.confirm("are you sure you want to logout?")){
-    this.loginService.logout()
-   }
+      this.modal.openModal("Are you sure you want to logout ?", () =>
+      {
+           this.loginService.logout();
+           this.toast.show("Logout successfully ");
+      }
+    )
+    }
 
-  }
 
   searchedPosts:IPosts[]=[] as IPosts[]
   searchByTitleAndTag(keyword: string) {

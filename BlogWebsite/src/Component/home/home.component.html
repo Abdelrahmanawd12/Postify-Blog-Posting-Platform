@@ -4,8 +4,16 @@
     <div class="card-body">
       <!-- User Info Section -->
       <div class="user-info" *ngIf="getUserById(p.userId) as user">
-        <img class="user-avatar" [src]="user.image" alt="User avatar">
-        <span class="user-name">{{user.firstName}} {{user.lastName}}</span>
+        @if(user.image) {
+         <img class="user-avatar" [src]="user.image" alt="User avatar">
+        }@else {
+          <img class="user-avatar" src="assets/default-avatar.png" alt="Post image">
+      }
+        @if(user.firstName && user.lastName) {
+        <span class="user-name" >{{user.firstName}} {{user.lastName}}</span>
+        } @else {
+        <span class="user-name">{{user.username}}</span>
+        }
       </div>
 
       <!-- Post Content -->
@@ -19,6 +27,7 @@
         <img class="post-image" [src]="p.imageUrl" alt="Post image">
       </div>
       }
+
 
       <!-- Reactions and Stats -->
       <div class="post-stats">

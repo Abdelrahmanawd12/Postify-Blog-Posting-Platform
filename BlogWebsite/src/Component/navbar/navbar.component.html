@@ -57,8 +57,8 @@
                  (input)="searchByTitleAndTag(input.value)"
                  (keyup.enter)="input.value && searchByTitleAndTag(input.value)">
           <i class="fa-solid fa-magnifying-glass position-absolute end-0 top-50 translate-middle-y me-3 text-secondary"></i>
-          <span class="position-absolute end-0 top-50 translate-middle-y me-3 text-danger"
-                style="cursor: pointer;"
+          <span class="position-absolute end-0 top-50 translate-middle-y me-5 text-danger"
+                style="cursor: pointer; font-size:x-large;"
                 *ngIf="input.value"
                 (click)="input.value=''; RemoveSearch()">
             &times;
@@ -80,7 +80,7 @@
     <div class="search-results-dropdown shadow-lg rounded-bottom">
       @for(p of searchedPosts; track p.id) {
         <div class="search-result-item p-3 border-bottom">
-          <a [routerLink]="['/posts', p.id]" class="text-decoration-none text-reset">
+          <a [routerLink]="['/post', p.id]" class="text-decoration-none text-reset">
             <div class="d-flex">
               @if(p.imageUrl) {
                 <div class="flex-shrink-0 me-3">

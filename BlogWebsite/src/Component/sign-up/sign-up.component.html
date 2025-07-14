@@ -1,3 +1,4 @@
+<!-- <h1>{{ userRegistrationForm.value | json }}</h1> -->
 <div class="facebook-signup-container">
   <div class="signup-wrapper">
     <div class="signup-header">
@@ -15,8 +16,95 @@
       <form [formGroup]="userRegistrationForm" class="signup-form">
         <div class="divider"></div>
 
-        <!-- Name Fields -->
-        <div class="name-fields">
+
+        <!-- Email  -->
+        <div class="form-group">
+          <input type="email" id="email" formControlName="email" name="email" placeholder="Email"
+            [class.invalid]="email?.touched && email?.invalid">
+          @if (email?.touched ) {
+          <div class="error-message">
+            @if(email?.errors?.['required']) {
+            <span>Email is required</span>
+            }
+            @if(email?.errors?.['pattern']) {
+            <span>Please enter a valid email</span>
+            }
+            @if (IsEmailExistence()) {
+            <span>Email already exists</span>
+            }
+          </div>
+          }
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+          <input type="text" id="username" formControlName="username" name="username" placeholder="Username"
+            [class.invalid]="username?.touched && username?.invalid">
+          @if(username?.touched) {
+          <div class="error-message">
+            @if(username?.errors?.['required']) {
+            <span>Username is required</span>
+            }
+            @else if(username?.errors?.['pattern']) {
+            <span>Username not valid , Please enter another one.</span>
+            }
+            @else if(username?.errors?.['maxlength']) {
+            <span>Username must be at most 20 characters.</span>
+            }
+            @else if (IsUsernameExistence()) {
+            <span>Username already exists.</span>
+            }
+          </div>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <input type="password" id="password" formControlName="password" name="password" placeholder="Password"
+            [class.invalid]="password?.touched && password?.invalid">
+          @if(password?.touched && password?.invalid) {
+          <div class="error-message">
+            @if(password?.errors?.['required']) {
+            <span>Password is required</span>
+            }
+            @if(password?.errors?.['pattern']) {
+            <span>Use 6+ characters with a mix of letters, numbers & symbols</span>
+            }
+          </div>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <input type="text" id="phone" formControlName="phone" name="phone" placeholder="Phone number"
+            [class.invalid]="phone?.touched && phone?.invalid">
+          @if (phone?.touched && phone?.invalid) {
+          <div class="error-message">
+            @if(phone?.errors?.['required']) {
+            <span>Phone number is required.</span>
+            }
+            @else if(phone?.errors?.['pattern']) {
+            <span>Phone number must be 11 digits and start with 010, 011, 012, or 015.</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-footer">
+          <button type="button" class="signup-btn" [disabled]="!userRegistrationForm.valid"
+            (click)="Register()">
+            Sign Up
+          </button>
+          <p class="terms-notice">
+            By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+      <!-- Name Fields -->
+        <!-- <div class="name-fields">
           <div class="form-group">
             <input type="text" id="firstName" formControlName="firstName" name="firstName" placeholder="First name"
               [class.invalid]="firstName?.touched && firstName?.invalid">
@@ -61,81 +149,11 @@
             </div>
             }
           </div>
-        </div>
-
-        <!-- Email  -->
-        <div class="form-group">
-          <input type="email" id="email" formControlName="email" name="email" placeholder="Email"
-            [class.invalid]="email?.touched && email?.invalid">
-          @if (email?.touched ) {
-          <div class="error-message">
-            @if(email?.errors?.['required']) {
-            <span>Email is required</span>
-            }
-            @if(email?.errors?.['email']) {
-            <span>Please enter a valid email</span>
-            }
-            @if (IsEmailExistence()) {
-            <span>Email already exists</span>
-            }
-          </div>
-          }
-        </div>
-
-        <!-- Username -->
-        <div class="form-group">
-          <input type="text" id="username" formControlName="username" name="username" placeholder="Username"
-            [class.invalid]="username?.touched && username?.invalid">
-          @if(username?.touched) {
-          <div class="error-message">
-            @if(username?.errors?.['required']) {
-            <span>Username is required</span>
-            }
-            @if(username?.errors?.['pattern']) {
-            <span>Username must be at least 3 characters</span>
-            }
-            @if (IsUsernameExistence()) {
-            <span>Username already exists</span>
-            }
-          </div>
-          }
-        </div>
-        <!-- Password -->
-        <div class="form-group">
-          <input type="password" id="password" formControlName="password" name="password" placeholder="Password"
-            [class.invalid]="password?.touched && password?.invalid">
-          @if(password?.touched && password?.invalid) {
-          <div class="error-message">
-            @if(password?.errors?.['required']) {
-            <span>Password is required</span>
-            }
-            @if(password?.errors?.['pattern']) {
-            <span>Use 6+ characters with a mix of letters, numbers & symbols</span>
-            }
-          </div>
-          }
-        </div>
-        <!-- Phone -->
-        <div class="form-group">
-          <input type="text" id="phone" formControlName="phone" name="phone" placeholder="Phone number"
-            [class.invalid]="phone?.touched && phone?.invalid">
-          @if (phone?.touched && phone?.invalid) {
-          <div class="error-message">
-            @if(phone?.errors?.['required']) {
-            <span>Phone number is required</span>
-            }
-            @if(phone?.errors?.['pattern']) {
-            <span>Use format like +123 456 7890</span>
-            }
-          </div>
-          }
-        </div>
-
+        </div> -->
 
         <!-- Birthday and Gender -->
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="form-group">
-            <!-- <label>Age</label> -->
             <input type="number" id="age" formControlName="age" name="age" placeholder="Age"
               [class.invalid]="age?.touched && age?.invalid">
             @if (age?.touched && age?.invalid) {
@@ -148,7 +166,6 @@
           </div>
 
           <div class="form-group">
-            <!-- <label>Gender</label> -->
             <select id="gender" formControlName="gender" name="gender"
               [class.invalid]="gender?.touched && gender?.invalid">
               <option value="">Select gender</option>
@@ -164,11 +181,10 @@
             </div>
             }
           </div>
-        </div>
+        </div> -->
 
         <!-- Profile Picture -->
-        <div class="form-group file-upload">
-          <!-- <label>Profile Picture</label> -->
+        <!-- <div class="form-group file-upload">
           <div class="upload-container">
             <input type="file" id="profilePic" (change)="onFileSelected($event)" accept="image/*">
             <label for="profilePic" class="upload-btn">
@@ -180,10 +196,10 @@
             </div>
             }
           </div>
-        </div>
+        </div> -->
 
         <!-- Address -->
-        <div formGroupName="address" class="address-section">
+        <!-- <div formGroupName="address" class="address-section">
           <div class="form-group">
             <input type="text" id="address" formControlName="address" name="address" placeholder="Street address"
               [class.invalid]="address?.touched && address?.invalid">
@@ -222,20 +238,4 @@
             </div>
           </div>
         </div>
-
-
-
-
-        <div class="form-footer">
-          <button type="button" class="signup-btn" [disabled]="!userRegistrationForm.valid"
-            (click)="uploadImageAndRegister()">
-            Sign Up
-          </button>
-          <p class="terms-notice">
-            By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.
-          </p>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+ -->

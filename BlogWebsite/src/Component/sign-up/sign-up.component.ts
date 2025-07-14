@@ -6,6 +6,8 @@ import { LoginService } from '../../Services/login.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { IUser } from '../../Models/Iuser';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -22,23 +24,30 @@ export class SignUpComponent implements OnInit{
 userRegistrationForm :FormGroup;
 constructor(private login:LoginService,private router:Router,private http:HttpClient) {
   this.userRegistrationForm = new FormGroup({
-    firstName:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z]{3,}$')]),
-    lastName:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z]{3,}$')]),
-    maidenName:new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z]{3,}$')]),
-    age:new FormControl('',[Validators.required]),
-    gender:new FormControl('',[Validators.required]),
-    email:new FormControl('',[Validators.required,Validators.email]),
-    image:new FormControl(''),
-    phone:new FormControl('',[Validators.required,
-      Validators.pattern("^\\+\\d{1,3}[\\s-]?\\d{1,4}[\\s-]?\\d{3}[\\s-]?\\d{4}$")
+
+
+    email:new FormControl('',[Validators.required,
+Validators.pattern("^[a-zA-Z][a-zA-Z0-9]*@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
     ]),
-    username:new FormControl('',[Validators.required,Validators.minLength(3)]),
+    phone:new FormControl('',[Validators.required,
+      Validators.pattern("^(010|011|012|015)[0-9]{8}$")
+    ]),
+    username:new FormControl('',[Validators.required,Validators.minLength(4),Validators.maxLength(20),
+Validators.pattern("^[a-zA-Z][a-zA-Z0-9._-]{4,}$")
+    ]),
     password:new FormControl('',[Validators.required,
   Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$")]),
+
+    firstName:new FormControl(''),
+    lastName:new FormControl(''),
+    maidenName:new FormControl(''),
+    age:new FormControl(''),
+    gender:new FormControl(''),
+    image:new FormControl(''),
     address:new FormGroup({
-      address:new FormControl('',[Validators.required]),
-      city:new FormControl('',[Validators.required]),
-      state:new FormControl('',[Validators.required]),
+      address:new FormControl(''),
+      city:new FormControl(''),
+      state:new FormControl(''),
     }),
     postsLiked:new FormControl([]),
     PostsDisLiked:new FormControl([]),
@@ -91,7 +100,12 @@ this.login.AddUser(this.userRegistrationForm.value).subscribe({
   next:(response)=>{
     // this.userRegistrationForm.reset();
 
-    alert("User registered successfully");
+Swal.fire({
+  icon: 'success',
+  title: 'Success',
+  text: 'Registration successful!',
+});
+
     this.router.navigate(['/login']);
   },
   error:(error)=>{

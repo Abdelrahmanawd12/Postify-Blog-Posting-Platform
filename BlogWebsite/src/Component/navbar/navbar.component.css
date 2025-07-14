@@ -78,3 +78,42 @@
     position: relative;
   }
 }
+/* confirmation-modal.component.css */
+.modal-content {
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  border-bottom: none;
+  padding: 1.25rem 1.5rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 1rem 1.5rem;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-secondary {
+  border-color: #dee2e6;
+}
+.button-checkout{
+  background-color:#f68b1e ;
+  color: white;
+}
+.button-checkout:hover{
+  background-color: white ;
+  color: #f68b1e;
+}
+.text-total{
+  color: #f68b1e;
+}

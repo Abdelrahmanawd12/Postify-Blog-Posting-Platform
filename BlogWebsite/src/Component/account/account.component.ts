@@ -5,6 +5,7 @@ import { IPosts } from '../../Models/Iposts';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ModalService } from '../../Services/modal.service';
+import { ToastService } from '../../Services/toast.service';
 
 @Component({
   selector: 'app-account',
@@ -18,7 +19,7 @@ posts: IPosts[] = [] as IPosts[];
 
 
 
-constructor(private postsService: PostsService,private _Router: Router,private _modal:ModalService) {
+constructor(private postsService: PostsService,private _Router: Router,private _modal:ModalService, private toast :ToastService) {
   // Initialization logic can go here if needed
   this.user = JSON.parse(localStorage.getItem("user") || '{}');
 }
@@ -72,6 +73,7 @@ deletePost(id: string) {
       next: () => {
         console.log("Post deleted successfully");
         this.getPostsByUserId(); // Refresh the list after deletion
+        this.toast.show("Post deleted successfully")
       },
       error: (error) => {
         console.error("Error deleting post", error);

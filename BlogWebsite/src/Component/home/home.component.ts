@@ -41,6 +41,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.GetAllPosts();
     this.getAllUsers();
+     this.postsService.postsUpdated$.subscribe(() => {
+    this.GetAllPosts(); // 
+  });
 
   }
 

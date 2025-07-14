@@ -1,7 +1,7 @@
+  <h1>{{ UpdatedUserForm?.value | json }}</h1>
 
-<div class="container m-5">
-<form [formGroup]="UpdatedUserForm">
-  <h1>{{ UpdatedUserForm.value | json }}</h1>
+<div class="container m-5" *ngIf="UpdatedUserForm">
+<form  [formGroup]="UpdatedUserForm" >
 <!-- first name -->
    <div class="mb-3">
     <label for="firstName" class="form-label">First Name</label>
@@ -210,9 +210,28 @@
               </div>
             }
    }
+    <!-- Profile Picture -->
+        <div class="form-group file-upload">
+          <!-- <label>Profile Picture</label> -->
+          <div class="upload-container">
+            <input type="file" id="profilePic" (change)="onFileSelected($event)" accept="image/*">
+            <label for="profilePic" class="upload-btn">
+              <i class="fas fa-camera"></i> Choose Img
+            </label>
+            @if (previewUrl) {
+            <div class="image-preview">
+              <img [src]="previewUrl" alt="Profile preview">
+            </div>
+            }
+          </div>
+        </div>
+
+
+
 
   </div>
-  <button type="button" class="btn btn-secondary w-100 mt-2" [disabled]="!UpdatedUserForm.valid" (click)="Update()" >Updated</button>
+  <button type="button" class="btn btn-secondary w-100 mt-2"  (click)="uploadImageAndRegister()" >Updated</button>
 
 </form>
 </div>
+

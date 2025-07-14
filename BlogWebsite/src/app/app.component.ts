@@ -11,6 +11,8 @@ import { SignUpComponent } from '../Component/sign-up/sign-up.component';
 import { SpinnerComponent } from "../Component/spinner/spinner.component";
 import { LoginService } from '../Services/login.service';
 import { IUser } from '../Models/Iuser';
+import { ModalService } from '../Services/modal.service';
+import { ToastService } from '../Services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +29,9 @@ export class AppComponent implements OnInit {
  private hiddenNavbarComponents = new Set([LoginComponent, SignUpComponent, ErrorComponent]);
 
 
-  constructor(private store:Store<{language:string}>,private router:Router,private route:ActivatedRoute,private _LoginService:LoginService,private _router:Router) {
+  constructor(private store:Store<{language:string}>,private router:Router,
+    private route:ActivatedRoute,private _LoginService:LoginService,private _router:Router,
+  public modal:ModalService,private toast:ToastService) {
       this.language$=this.store.select("language");
       this.language$.subscribe((lang)=>
         {
@@ -41,32 +45,34 @@ this.router.events
         this.showNavbar = !currentRoute.snapshot.data['hideNavbar'];
       });
   }
+ toastMessage: string = "";
 
 
   ngOnInit() {
-    if (document.cookie.includes("user=")) {
-      const userCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('user='))
-        ?.split('=')[1];
+  if (document.cookie.includes("user=")) {
+    const userCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('user='))
+      ?.split('=')[1];
 
-      if (userCookie) {
-        const userObj = JSON.parse(decodeURIComponent(userCookie));
-        this._LoginService.getUserByEmailAndPassword(userObj.email,userObj.password).subscribe({
-            next:(data:IUser[])=>{
-              if(data.length>0){
-                alert("you are still logged in");
-                localStorage.setItem("user",JSON.stringify(data[0]));
+    const token = document.cookie
+      .split("; ")
+      .find(row => row.startsWith('token='))
+      ?.split('=')[1];
 
-                this._LoginService.login();
-              }
-            }
-          });
-        // this._LoginService.setLikedPosts(userObj.postsLiked || []);
-        this.router.navigate(['/home']);
-      }
+    if (userCookie && token) {
+      const userObj = JSON.parse(decodeURIComponent(userCookie));
+
+      localStorage.setItem("user", JSON.stringify(userObj));
+      localStorage.setItem("token", token);
+
+      this._LoginService.login();
+      this.toast.show("👋 Welcome back! You're still logged in.");
+      this.router.navigate(['/home']);
     }
   }
+}
+
   getDeepestChild(route: ActivatedRoute): ActivatedRoute {
     while (route.firstChild) {
       route = route.firstChild;

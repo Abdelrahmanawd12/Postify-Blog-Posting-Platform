@@ -2,7 +2,7 @@
 .facebook-login-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   /* background-color: #f0f2f5; */
   font-family: Arial, Helvetica, sans-serif;

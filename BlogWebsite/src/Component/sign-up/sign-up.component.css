@@ -2,7 +2,7 @@
 .facebook-signup-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   /* background-color: #f0f2f5; */
   font-family: Arial, Helvetica, sans-serif;
@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 5px;
 }
 
 /* Header with logo and tagline */
@@ -59,14 +59,14 @@
 .signup-subtitle {
   color: #606770;
   text-align: center;
-  margin: 0 0 20px;
+  margin: 0 0 15px;
   font-size: 0.9375rem;
 }
 
 .divider {
   height: 1px;
   background-color: #dadde1;
-  margin: 15px 0;
+  margin-bottom: 12px;
 }
 
 /* Form elements */
@@ -172,7 +172,7 @@
   color: white;
   cursor: pointer;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 3px;
 }
 
 .signup-btn:hover {
@@ -233,7 +233,7 @@
 
 @media (max-width: 400px) {
   .facebook-signup-container {
-    padding: 10px;
+    padding: 1px;
   }
 
   .logo-text {

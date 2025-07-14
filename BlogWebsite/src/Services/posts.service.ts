@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';
+import { forkJoin, map, Observable, Subject, switchMap, tap, throwError } from 'rxjs';
 import { IPosts } from '../Models/Iposts';
 import { environment } from '../environments/environment.development';
 import { LoginService } from './login.service';
@@ -106,7 +106,7 @@ DislikeToggle(post: IPosts): Observable<any> {
   }
 
   const updateUser$ = this.httpClient.patch<IUser>(
-    `${environment.apiUrl}/users/${user.id}`,
+    `${environment.apiUrl}/users/${user?.id}`,
     { PostsDisLiked }
   ).pipe(
     tap(updatedUser => {
@@ -149,6 +149,12 @@ deletePost(id: string): Observable<void> {
 }
 
 
+private postsUpdated = new Subject<void>();
+postsUpdated$ = this.postsUpdated.asObservable();
+
+emitPostsUpdate() {
+  this.postsUpdated.next();
+  }
 
 
 

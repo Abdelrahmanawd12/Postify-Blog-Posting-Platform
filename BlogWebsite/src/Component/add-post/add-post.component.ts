@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { LanguageService } from '../../Services/language.service';
 import { Store } from '@ngrx/store';
 import { LanguageAction } from '../../Store/Language/Language.Action';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-post',
@@ -23,7 +24,7 @@ export class AddPostComponent {
   addPostForm:FormGroup;
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
-  
+
   language$=new Observable<string>;
   currentlang!: 'en' | 'ar';
 
@@ -126,14 +127,17 @@ AddPost(){
 this.postsService.AddPost(this.addPostForm.value).subscribe({
   next: (response: IPosts) => {
     console.log('Post added successfully:', response);
-  alert("post added successfully . ");
+Swal.fire({
+  icon: 'success',
+  title: 'Success',
+  text: 'Post added successfully!',
+});
+  this.postsService.emitPostsUpdate(); // Emit an update to notify other components
+
   this.showAddPost.emit(false);
-  this.router.navigate(['/home'])
-// this.ngOnInit(); // Refresh the component to show the new post
-window.location.reload(); // Reload the page to reflect the new post
-    // this.addPostForm.reset();
-    //  this.previewUrl = null;
-    //     this.selectedFile = null;
+
+  this.router.navigate(['/home']);
+
   },
   error: (error) => {
     console.error('Error adding post:', error);
