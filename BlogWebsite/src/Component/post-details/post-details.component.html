@@ -1,12 +1,19 @@
-
 <div class="posts-container">
 
   <div class="card post-card">
     <div class="card-body">
       <!-- User Info Section -->
       <div class="user-info" *ngIf="getUserById(post.userId) as user">
-        <img class="user-avatar" [src]="user.image" alt="User avatar">
-        <span class="user-name">{{user.firstName}} {{user.lastName}}</span>
+           @if(user.image) {
+         <img class="user-avatar" [src]="user.image" alt="User avatar">
+        }@else {
+          <img class="user-avatar" src="assets/default-avatar.png" alt="Post image">
+      }
+       @if(user.firstName && user.lastName) {
+        <span class="user-name" >{{user.firstName}} {{user.lastName}}</span>
+        } @else {
+        <span class="user-name">{{user.username}}</span>
+        }
       </div>
 
       <!-- Post Content -->
@@ -14,7 +21,6 @@
       <p class="post-text">{{post.body}}</p>
 
       <!-- Post Image if exists -->
-
       @if(post.imageUrl) {
       <div class="post-image-container">
         <img class="post-image" [src]="post.imageUrl" alt="Post image">
@@ -27,35 +33,91 @@
         <span class="stat-item"><i class="fa-regular fa-thumbs-up"></i> {{post?.reactions?.likes}}</span>
         <span class="stat-item"><i class="fa-regular fa-thumbs-down"></i> {{post?.reactions?.dislikes}}</span>
       </div>
-      <hr>
-      <!-- Like/Dislike/View Buttons -->
+
+      <!-- Like/Dislike Buttons -->
       <div class="reaction-buttons">
-        <div>
-          @if(isLiked(post)) {
-          <i class="fa-solid fa-thumbs-up reaction-btn liked" (click)="likePost(post)"></i> <span>
-            {{getText("Like")}}</span>
-          } @else {
-          <i class="fa-regular fa-thumbs-up reaction-btn" (click)="likePost(post)"></i> <span>
-            {{getText("Like")}}</span>
-          }
-        </div>
+        <button class="reaction-btn" [class.active]="isLiked(post)" (click)="likePost(post)">
+          <i class="fa-regular fa-thumbs-up"></i>
+          <span>{{getText("Like")}}</span>
+        </button>
 
-        <div>
-          @if(isDisliked(post)) {
-          <i class="fa-solid fa-thumbs-down reaction-btn disliked" (click)="dislikePost(post)"></i> <span>
-            {{getText("Dislike")}}</span>
-          } @else {
-          <i class="fa-regular fa-thumbs-down reaction-btn" (click)="dislikePost(post)"></i> <span>
-            {{getText("Dislike")}}</span>
-          }
-        </div>
-
-
-
+        <button class="reaction-btn" [class.active]="isDisliked(post)" (click)="dislikePost(post)">
+          <i class="fa-regular fa-thumbs-down"></i>
+          <span>{{getText("Dislike")}}</span>
+        </button>
       </div>
 
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <h6 class="comments-title">{{post.comments?.length ? post.comments.length : getText("No")}} {{getText("Comments")}}</h6>
+
+        <div class="comments-list">
+          @for (comment of post.comments; track comment.id) {
+          <div class="comment-item" *ngIf="getUserById(comment.userId) as user">
+            <div class="comment-avatar">
+              @if(user.image) {
+                <img [src]="user.image" alt="User avatar">
+              } @else {
+                <img src="assets/default-avatar.png" alt="Default avatar">
+              }
+            </div>
+
+            <div class="comment-content">
+              <div class="comment-header">
+                <span class="comment-author">
+                  @if(user.username) {
+                    {{user.username}}
+                  } @else {
+                    {{user.firstName}} {{user.lastName}}
+                  }
+                </span>
+                @if(comment.userId === currentUser?.id) {
+                  <div class="comment-actions">
+                    <i class="fa-solid fa-pen-to-square" (click)="startEdit(comment)"></i>
+                    <i class="fa-solid fa-trash" (click)="DeleteComment(post.id, comment.id)"></i>
+                  </div>
+                }
+              </div>
+
+              <div class="comment-body" *ngIf="!comment.isEditing">
+                {{ comment.body }}
+              </div>
+
+              <div class="comment-edit" *ngIf="comment.isEditing">
+                <textarea [(ngModel)]="comment.body" class="form-control"></textarea>
+                <button class="btn btn-sm btn-primary" (click)="UpdateComment(post.id, comment.id, comment.body)" [disabled]="!comment.body||comment.body.length === 0">update</button>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Add Comment Form -->
+      <div class="add-comment-form">
+        <div class="form-avatar">
+          @if(currentUser?.image) {
+            <img [src]="currentUser.image" alt="User avatar">
+          } @else {
+            <img src="assets/default-avatar.png" alt="Default avatar">
+          }
+        </div>
+
+        <div class="form-content">
+          <textarea
+            class="form-control"
+            placeholder="{{getText('Add_comment')}} ...."
+            #textarea
+ [(ngModel)]="newCommentText"
+  name="newComment"
+           (keydown.enter)="AddComment(post.id, newCommentText)"
+          ></textarea>
+          <button class="btn btn-primary"    [disabled]="!newCommentText || newCommentText.length === 0"
+  (click)="AddComment(post.id, newCommentText); newCommentText = ''" >
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
     </div>
-
   </div>
-
 </div>

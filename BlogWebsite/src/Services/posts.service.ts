@@ -156,6 +156,56 @@ emitPostsUpdate() {
   this.postsUpdated.next();
   }
 
+//add comment
+AddComment(postId: string, comment: { userId: string; content: string }): Observable<IPosts> {
+  return this.httpClient.get<IPosts>(`${environment.apiUrl}/posts/${postId}`).pipe(
+    switchMap(post => {
+      const newComment = {
+        id: this.generateRandomId(),
+        userId: comment.userId,
+        body: comment.content,
+        likes: 0
+      };
+      const updatedComments = [...(post.comments || []), newComment];
 
+      return this.httpClient.patch<IPosts>(`${environment.apiUrl}/posts/${postId}`, {
+        comments: updatedComments
+      });
+    })
+  );
+}
 
+generateRandomId(length: number = 6): string {
+  return Math.random().toString(36).substr(2, length);
+}
+
+//update comment
+UpdateComment(postId: string, commentId: string, updatedContent: string): Observable<IPosts> {
+  return this.httpClient.get<IPosts>(`${environment.apiUrl}/posts/${postId}`).pipe(
+    switchMap(post => {
+      const updatedComments = post.comments.map(comment => {
+        if (comment.id === commentId) {
+          return { ...comment, body: updatedContent, isEditing: false };
+        }
+        return comment;
+      });
+
+      return this.httpClient.patch<IPosts>(`${environment.apiUrl}/posts/${postId}`, {
+        comments: updatedComments
+      });
+    })
+  );
+}
+//delete comment
+DeleteComment(postId: string, commentId: string): Observable<IPosts> {
+  return this.httpClient.get<IPosts>(`${environment.apiUrl}/posts/${postId}`).pipe(
+    switchMap(post => {
+      const updatedComments = post.comments.filter(comment => comment.id !== commentId);
+
+      return this.httpClient.patch<IPosts>(`${environment.apiUrl}/posts/${postId}`, {
+        comments: updatedComments
+      });
+    })
+  );
+}
 }

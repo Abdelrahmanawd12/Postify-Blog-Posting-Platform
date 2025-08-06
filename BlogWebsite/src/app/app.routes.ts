@@ -16,6 +16,7 @@ export const routes: Routes = [
   {path:"signup",loadComponent:() => import('../Component/sign-up/sign-up.component').then(m => m.SignUpComponent),data:{hideNavbar:true}},
   {path:"post/:id",loadComponent:() => import('../Component/post-details/post-details.component').then(m => m.PostDetailsComponent)},
   {path:"account",loadComponent:() => import('../Component/account/account.component').then(m => m.AccountComponent)},
+
   {path:"addpost",loadComponent:() => import('../Component/add-post/add-post.component').then(m => m.AddPostComponent)},
   {path:"updatepost/:id",loadComponent:() => import('../Component/update-post/update-post.component').then(m => m.UpdatePostComponent)},
   {path:"updateuser/:id",loadComponent:() => import('../Component/update-account/update-account.component').then(m => m.UpdateAccountComponent)},

@@ -10,7 +10,14 @@ export interface IPosts {
   views: number;
   userId: string;
  imageUrl:string;
-  IsUpdated:boolean
+  IsUpdated:boolean,
+  comments:[{
+    id: string,
+    userId: string,
+    body:string,
+    likes: number,
+    isEditing: boolean
+  }]
 
 
 }

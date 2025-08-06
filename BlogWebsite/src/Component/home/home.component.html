@@ -1,85 +1,115 @@
-<div class="posts-container">
-  @for(p of posts; track p.id) {
-  <div class="card post-card">
-    <div class="card-body">
-      <!-- User Info Section -->
-      <div class="user-info" *ngIf="getUserById(p.userId) as user">
-        @if(user.image) {
-         <img class="user-avatar" [src]="user.image" alt="User avatar">
-        }@else {
-          <img class="user-avatar" src="assets/default-avatar.png" alt="Post image">
-      }
-        @if(user.firstName && user.lastName) {
-        <span class="user-name" >{{user.firstName}} {{user.lastName}}</span>
-        } @else {
-        <span class="user-name">{{user.username}}</span>
-        }
-      </div>
-
-      <!-- Post Content -->
-      <h5 class="post-title">{{p.title}}</h5>
-      <p class="post-text">{{p.body}}</p>
-
-      <!-- Post Image if exists -->
-
-      @if(p.imageUrl) {
-      <div class="post-image-container">
-        <img class="post-image" [src]="p.imageUrl" alt="Post image">
-      </div>
-      }
-
-
-      <!-- Reactions and Stats -->
-      <div class="post-stats">
-        <span class="stat-item"><i class="fa-regular fa-eye"></i> {{p.views}}</span>
-        <span class="stat-item"><i class="fa-regular fa-thumbs-up"></i> {{p.reactions.likes}}</span>
-        <span class="stat-item"><i class="fa-regular fa-thumbs-down"></i> {{p.reactions.dislikes}}</span>
-      </div>
-      <hr>
-      <!-- Like/Dislike/View Buttons -->
-      <div class="AllButtons">
-        <div class="reaction-buttons">
-          <div>
-            @if(isLiked(p)) {
-            <i class="fa-solid fa-thumbs-up reaction-btn liked" (click)="likePost(p)"></i> <span>
-              {{getText("Like")}}</span>
-            } @else {
-            <i class="fa-regular fa-thumbs-up reaction-btn" (click)="likePost(p)"></i> <span> {{getText("Like")}}</span>
-            }
-          </div>
-
-          <div>
-            @if(isDisliked(p)) {
-            <i class="fa-solid fa-thumbs-down reaction-btn disliked" (click)="dislikePost(p)"></i> <span>
-              {{getText("Dislike")}}</span>
-            } @else {
-            <i class="fa-regular fa-thumbs-down reaction-btn" (click)="dislikePost(p)"></i> <span>
-              {{getText("Dislike")}}</span>
-            }
-          </div>
-
-
-
-        </div>
-        <div>
-          <button class="btn view-btn" (click)="viewPost(p.id)">{{getText("Viewpost")}}</button>
-        </div>
-
-
-
-      </div>
-    </div>
-
-  </div>
-  }
-</div>
-
-<!-- Floating Action Button -->
+<div class="blog-container">
+  <!-- Floating Action Button -->
 <div class="fab-container" *ngIf="isLoggedIn()">
   <button class="fab-btn" *ngIf="!showAddPostComponent" (click)="toggleAddPost(true)">
     <i class="fas fa-plus"></i>
   </button>
 </div>
 
+ <!-- Posts List -->
+  <div class="posts-stack">
+    @for(p of posts; track p.id) {
+    <article class="post-card">
+      <!-- User Info -->
+      <div class="post-header" *ngIf="getUserById(p.userId) as user">
+        <div class="d-flex align-items-center gap-1">
+                <div class="user-avatar">
+                      @if(user.image) {
+                        <img [src]="user.image" alt="User avatar">
+                      }@else {
+                        <img src="assets/default-avatar.png" alt="Default avatar">
+                      }
+                    </div>
+
+
+
+                    <div class="user-info">
+                      @if(user.firstName && user.lastName) {
+                        <h4>{{user.firstName}} {{user.lastName}}</h4>
+                      } @else {
+                        <h4>{{user.username}}</h4>
+                      }
+                    </div>
+
+
+        </div>
+
+            <div class="post-crud " *ngIf="currentUser.id == p.userId">
+              <i class="fa-solid fa-pen-to-square" (click)="updatePost(p.id)"></i>
+              <i class="fa-solid fa-trash" (click)="deletePost(p.id)"></i>
+            </div>
+
+
+
+      </div>
+
+      <!-- Post Content -->
+      <div class="post-content">
+        <h3 class="post-title">{{p.title}}</h3>
+        <p class="post-text">{{p.body}}</p>
+      </div>
+
+      <!-- Post Image -->
+      @if(p.imageUrl) {
+      <div class="post-image-container">
+        <img [src]="p.imageUrl" alt="Post image">
+      </div>
+      }
+
+      <!-- Post Stats -->
+      <div class="post-stats">
+        <div class="stat-item">
+          <i class="fa-regular fa-thumbs-up"></i>
+          <span>{{p.reactions.likes}}</span>
+        </div>
+        <div class="stat-item">
+          <i class="fa-regular fa-thumbs-down"></i>
+          <span>{{p.reactions.dislikes}}</span>
+        </div>
+        <div class="stat-item">
+          <i class="fa-regular fa-comment"></i>
+          <span>{{p.comments?.length}}</span>
+        </div>
+        <div class="stat-item">
+          <i class="fa-regular fa-eye"></i>
+          <span>{{p.views}}</span>
+        </div>
+      </div>
+
+      <!-- Post Actions -->
+      <div class="post-actions">
+        <button class="action-btn" (click)="likePost(p)">
+          @if(isLiked(p)) {
+            <i class="fa-solid fa-thumbs-up liked"></i>
+          } @else {
+            <i class="fa-regular fa-thumbs-up"></i>
+          }
+          {{getText("Like")}}
+        </button>
+
+        <button class="action-btn" (click)="dislikePost(p)">
+          @if(isDisliked(p)) {
+            <i class="fa-solid fa-thumbs-down disliked"></i>
+          } @else {
+            <i class="fa-regular fa-thumbs-down"></i>
+          }
+          {{getText("Dislike")}}
+        </button>
+
+        <button class="action-btn" (click)="viewPost(p.id)">
+          <i class="fa-regular fa-comment"></i>
+          {{getText("Comment")}}
+        </button>
+      </div>
+    </article>
+    }
+  </div>
+</div>
+
+
 <!-- Add Post Component -->
 <app-add-post *ngIf="showAddPostComponent" (showAddPost)="toggleAddPost($event)"></app-add-post>
+
+
+
+

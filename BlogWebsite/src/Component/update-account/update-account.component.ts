@@ -7,6 +7,10 @@ import { IUser } from '../../Models/Iuser';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../../Services/toast.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { LanguageService } from '../../Services/language.service';
+import { LanguageAction } from '../../Store/Language/Language.Action';
 
 @Component({
   selector: 'app-update-account',
@@ -18,9 +22,23 @@ export class UpdateAccountComponent implements OnInit {
 
 UpdatedUserForm !:FormGroup;
 userData:IUser={}as IUser;
-constructor(private login:LoginService,private route:ActivatedRoute,private router:Router, private http :HttpClient, private toast:ToastService) {}
+Language$=new Observable<string>;
+  currentlang!: 'en' | 'ar';
+constructor(private login:LoginService,private route:ActivatedRoute,private router:Router,
+  private http :HttpClient, private toast:ToastService,private translator:LanguageService,
+      private store:Store<{language: 'en' | 'ar'}>) {
+         // Initialization logic can go here if needed
+   this.Language$ = this.store.select("language");
+    this.Language$.subscribe((lang) => {
+      this.currentlang = lang as 'en' | 'ar';
+      this.translator.currentlang = this.currentlang;
+    });
+      }
+  users:IUser[] = [] as IUser[]
 
   ngOnInit(): void {
+      this.getAllUsers();
+
     this.route.paramMap.subscribe(param=>{
   const userId=param.get('id')||''
 this.login.getUserById(userId).subscribe({
@@ -30,27 +48,52 @@ this.login.getUserById(userId).subscribe({
 
 
     this.UpdatedUserForm = new FormGroup({
-        firstName:new FormControl(this.userData.firstName,[Validators.required,Validators.pattern('^[a-zA-Z]{3,}$')]),
-        lastName:new FormControl(this.userData.lastName,[Validators.required,Validators.pattern('^[a-zA-Z]{3,}$')]),
-        maidenName:new FormControl(this.userData.maidenName,[Validators.required,Validators.pattern('^[a-zA-Z]{3,}$')]),
-        age:new FormControl(this.userData.age,[Validators.required]),
-        gender:new FormControl(this.userData.gender,[Validators.required]),
-        email:new FormControl(this.userData.email,[Validators.required,Validators.email]),
-        phone:new FormControl(this.userData.phone,[Validators.required,
-          Validators.pattern("^\\+\\d{1,3}[\\s-]?\\d{1,4}[\\s-]?\\d{3}[\\s-]?\\d{4}$")
-        ]),
-       image:new FormControl(''),
+      firstName: new FormControl(this.userData.firstName, [
 
-        username:new FormControl(this.userData.username,[Validators.required,Validators.minLength(3)]),
-        password:new FormControl(this.userData.password,[Validators.required,
-      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$")]),
-        address:new FormGroup({
-          address:new FormControl(this.userData.address.address,[Validators.required]),
-          city:new FormControl(this.userData.address.city,[Validators.required]),
-          state:new FormControl(this.userData.address.state,[Validators.required]),
-        })
-      });
+        Validators.pattern('^[a-zA-Z]{3,}$'),
+      ]),
+      lastName: new FormControl(this.userData.lastName, [
 
+        Validators.pattern('^[a-zA-Z]{3,}$'),
+      ]),
+      maidenName: new FormControl(this.userData.maidenName, [
+        Validators.pattern('^[a-zA-Z]{3,}$'),
+      ]),
+      age: new FormControl(this.userData.age),
+      gender: new FormControl(this.userData.gender),
+
+      email: new FormControl(this.userData.email, [
+        Validators.required,
+        Validators.pattern(
+          '^[a-zA-Z][a-zA-Z0-9]*@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+        ),
+      ]),
+      phone: new FormControl(this.userData.phone, [
+        Validators.required,
+        Validators.pattern('^(010|011|012|015)[0-9]{8}$'),
+      ]),
+      username: new FormControl(this.userData.username, [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(20),
+        Validators.pattern('^[a-zA-Z][a-zA-Z0-9._-]{4,}$'),
+      ]),
+      image: new FormControl(this.userData.image),
+
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$'
+        ),
+      ]),
+      address: new FormGroup({
+        address: new FormControl(this.userData.address.address),
+        city: new FormControl(this.userData.address.city,),
+        state: new FormControl(this.userData.address.state, ),
+      }),
+    });
+   this.IsEmailExistence();
+        this.IsUsernameExistence();
 
 
 
@@ -66,7 +109,23 @@ this.login.getUserById(userId).subscribe({
 
   }
 
+// Add to your component class
+showDebug = false;
+showPassword = false;
 
+toggleDebug(): void {
+  this.showDebug = !this.showDebug;
+}
+
+togglePasswordVisibility(): void {
+  this.showPassword = !this.showPassword;
+}
+
+removeImage(): void {
+  this.previewUrl = null;
+  this.selectedFile = null;
+  this.UpdatedUserForm.patchValue({ image: 'assets/default-avatar.png' });
+}
 get firstName() {
   return this.UpdatedUserForm.get('firstName');
 }
@@ -85,6 +144,9 @@ get age() {
 
 get gender() {
   return this.UpdatedUserForm.get('gender');
+}
+get image(){
+  return this.UpdatedUserForm.get('image')
 }
 
 get email() {
@@ -130,6 +192,7 @@ Update() {
       this.toast.show("Account Updated");
       this.router.navigateByUrl(`/account`);
         localStorage.setItem("user",JSON.stringify(data));
+        document.cookie
 
     },
     error: (error) => {
@@ -182,6 +245,79 @@ uploadImageAndRegister(): void {
   }
 
 
+getAllUsers(){
+  this.login.getALlUsers().subscribe({
+  next:(data:IUser[])=>{
+   this.users=data;
+   console.log("fetch successfully all users",data)
+  this.IsEmailExistence()
+  this.IsUsernameExistence();
 
+  },error:(error)=>{
+    console.log("error fetch all users", error)
+  }
+})
+}
+// AllEmails!:string[]
+IsEmailExistence(): boolean {
+    if (!this.UpdatedUserForm || !this.userData) return false;
+
+    const currentEmail = this.UpdatedUserForm.get('email')?.value;
+    if (!currentEmail) return false;
+
+    const allEmails = this.users
+      .filter(user => user.id !== this.userData.id)
+      .map(user => user.email)
+      .filter(email => !!email);
+
+    const exists = allEmails.includes(currentEmail);
+
+    if (exists) {
+      this.email?.setErrors({ emailExists: true });
+    } else {
+      this.clearError('email', 'emailExists');
+    }
+
+    return exists;
+  }
+
+  private clearError(controlName: string, errorName: string): void {
+    const control = this.UpdatedUserForm.get(controlName);
+    if (control?.errors?.[errorName]) {
+      const errors = { ...control.errors };
+      delete errors[errorName];
+      control.setErrors(Object.keys(errors).length ? errors : null);
+    }
+  }
+ IsUsernameExistence(): boolean {
+    if (!this.UpdatedUserForm || !this.userData) return false;
+
+    const currentUsername = this.UpdatedUserForm.get('username')?.value;
+    if (!currentUsername) return false;
+
+    const allUsernames = this.users
+      .filter(user => user.id !== this.userData.id)
+      .map(user => user.username)
+      .filter(username => !!username);
+
+    const exists = allUsernames.includes(currentUsername);
+
+    if (exists) {
+      this.username?.setErrors({ usernameExists: true });
+    } else {
+      this.clearError('username', 'usernameExists');
+    }
+
+    return exists;
+  }
+getText(key: keyof typeof this.translator['texts']['en']) {
+  return this.translator.getText(key);
+}
+
+
+  ChangeLanguage(){
+this.store.dispatch(LanguageAction({lang:(this.currentlang==="en")?"ar":"en"}))
+
+}
 
 }

@@ -11,17 +11,24 @@ import { Observable } from 'rxjs';
 import { LanguageService } from '../../Services/language.service';
 import { Store } from '@ngrx/store';
 import { LanguageAction } from '../../Store/Language/Language.Action';
+import { PostDetailsComponent } from "../post-details/post-details.component";
+import { CommentsComponent } from "../comments/comments.component";
+import { ToastService } from '../../Services/toast.service';
+import { ModalService } from '../../Services/modal.service';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, AddPostComponent],
+  imports: [CommonModule, AddPostComponent, PostDetailsComponent, CommentsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+
+currentUser: IUser = {} as IUser;
   constructor(private postsService: PostsService,private _Router:Router,
     private login:LoginService,private translator:LanguageService,
-    private store:Store<{language: 'en' | 'ar'}>
+    private store:Store<{language: 'en' | 'ar'}>,
+    private _modal:ModalService, private toast :ToastService
   ) {
     // Initialization logic can go here if needed
     this.Language$ = this.store.select("language");
@@ -29,6 +36,8 @@ export class HomeComponent implements OnInit {
       this.currentlang = lang as 'en' | 'ar';
       this.translator.currentlang = this.currentlang;
     });
+        this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+
   }
   posts:IPosts[] = [] as IPosts[];
   users: IUser[] = [];
@@ -42,7 +51,7 @@ export class HomeComponent implements OnInit {
     this.GetAllPosts();
     this.getAllUsers();
      this.postsService.postsUpdated$.subscribe(() => {
-    this.GetAllPosts(); // 
+    this.GetAllPosts(); //
   });
 
   }
@@ -135,6 +144,41 @@ toggleAddPost(value: boolean) {
   this.showAddPostComponent = value;
 }
 
+showCommentComponent = false;
+  currentPostId: string | null = null;
+
+  // ... existing code ...
+
+  toggleComment(show: boolean, postId?: string) {
+    this.showCommentComponent = show;
+    this.currentPostId = show ? (postId ?? null) : null;
+  }
+
+  closeComment() {
+    this.toggleComment(false);
+  }
+  confirmModalAction() {
+  this._modal.confirm();
+}
+updatePost(id: string) {
+  this._Router.navigateByUrl(`/updatepost/${id}`);
+}
+deletePost(id: string) {
+  // Show confirmation modal before deleting
+  this._modal.openModal("Are you sure you want to delete this post?", () => {
+
+        this.postsService.deletePost(id).subscribe({
+      next: () => {
+        console.log("Post deleted successfully");
+        this.GetAllPosts(); // Refresh the list after deletion
+        this.toast.show("Post deleted successfully")
+      },
+      error: (error) => {
+        console.error("Error deleting post", error);
+      }
+    });
+  });
+}
 
 getText(key: keyof typeof this.translator['texts']['en']) {
   return this.translator.getText(key);
@@ -145,4 +189,5 @@ getText(key: keyof typeof this.translator['texts']['en']) {
 this.store.dispatch(LanguageAction({lang:(this.currentlang==="en")?"ar":"en"}))
 
 }
+
 }

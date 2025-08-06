@@ -13,6 +13,7 @@ import { LanguageService } from '../../Services/language.service';
 import { Store } from '@ngrx/store';
 import { LanguageAction } from '../../Store/Language/Language.Action';
 import Swal from 'sweetalert2';
+import { ToastService } from '../../Services/toast.service';
 
 @Component({
   selector: 'app-add-post',
@@ -35,7 +36,8 @@ export class AddPostComponent {
     private Login:LoginService,
       private http: HttpClient,
       private router:Router,
-        private store:Store<{language: 'en' | 'ar'}>
+        private store:Store<{language: 'en' | 'ar'}>,
+        private toastService: ToastService
 
   ) {
 
@@ -55,7 +57,8 @@ this.language$.subscribe((lang)=>{
         }),
         views: [0],
         userId: [this.Login.userId],
-        imageUrl:['']
+        imageUrl:[''],
+        Comments: this.formBuilder.array([]),
       });
      }
 get title() {
@@ -127,11 +130,7 @@ AddPost(){
 this.postsService.AddPost(this.addPostForm.value).subscribe({
   next: (response: IPosts) => {
     console.log('Post added successfully:', response);
-Swal.fire({
-  icon: 'success',
-  title: 'Success',
-  text: 'Post added successfully!',
-});
+this.toastService.show('Post added successfully', 'success');
   this.postsService.emitPostsUpdate(); // Emit an update to notify other components
 
   this.showAddPost.emit(false);

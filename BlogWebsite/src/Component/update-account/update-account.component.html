@@ -1,237 +1,261 @@
-  <h1>{{ UpdatedUserForm?.value | json }}</h1>
-
-<div class="container m-5" *ngIf="UpdatedUserForm">
-<form  [formGroup]="UpdatedUserForm" >
-<!-- first name -->
-   <div class="mb-3">
-    <label for="firstName" class="form-label">First Name</label>
-    <input type="text" class="form-control" id="firstName" formControlName="firstName" name="firstName"
-           placeholder="Enter your first name">
-  </div>
-  <!-- Validation messages for first name -->
-   @if (firstName?.touched) {
-          @if(firstName?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                First name is required.
-              </div>
-            }
-            @if(firstName?.errors?.['pattern']) {
-              <div class="alert alert-danger" role="alert">
-                First name must be at least 3 characters long.
-              </div>
-            }
-   }
-
-
-<!-- maiden name -->
-   <div class="mb-3">
-    <label for="maidenName" class="form-label">Maiden Name</label>
-    <input type="text" class="form-control" id="maidenName" formControlName="maidenName" name="maidenName"
-           placeholder="Enter your maiden name">
-  </div>
-    @if (maidenName?.touched) {
-          @if(maidenName?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Maiden name is required.
-              </div>
-            }
-            @if(maidenName?.errors?.['pattern']) {
-              <div class="alert alert-danger" role="alert">
-                Maiden name must be at least 3 characters long.
-              </div>
-            }
-   }
-<!-- last name -->
-  <div class="mb-3">
-    <label for="lastName" class="form-label">Last Name</label>
-    <input type="text" class="form-control" id="lastName" formControlName="lastName" name="lastName"
-           placeholder="Enter your last name">
-  </div>
-    @if (lastName?.touched) {
-          @if(lastName?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Last  name is required.
-              </div>
-            }
-            @if(lastName?.errors?.['pattern']) {
-              <div class="alert alert-danger" role="alert">
-                Last name must be at least 3 characters long.
-              </div>
-            }
-   }
-  <!-- age -->
-  <div class="mb-3">
-    <label for="age" class="form-label">Age</label>
-    <input type="number" class="form-control" id="age" formControlName="age" name="age"
-           placeholder="Enter your age">
-  </div>
-  @if (age?.touched) {
-          @if(age?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Age is required.
-              </div>
-            }
-   }
-  <!-- gender -->
-  <div class="mb-3">
-    <label for="gender" class="form-label">Gender</label>
-    <select class="form-select" id="gender" formControlName="gender" name="gender" >
-      <option value="">Select your gender</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>
-    </select>
-  </div>
-  @if (gender?.touched) {
-          @if(gender?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Gender is required.
-              </div>
-            }
-   }
-  <!-- phone -->
-  <div class="mb-3">
-    <label for="phone" class="form-label">Phone Number</label>
-    <input type="text" class="form-control" id="phone" formControlName="phone" name="phone"
-           placeholder="Enter your phone number">
-  </div>
-  @if (phone?.touched) {
-          @if(phone?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Phone number is required.
-              </div>
-            }
-            @if(phone?.errors?.['pattern']) {
-              <div class="alert alert-danger" role="alert">
-                Phone number must be a valid format like <span style="font-weight: bold; color:red ;">+123 456 7890</span>.
-              </div>
-            }
-   }
-<!-- email -->
-    <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email" formControlName="email" name="email"
-            placeholder="Enter your email"
-            aria-describedby="emailHelp">
+<div class="update-account-container">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">{{getText('update_account')}}</h2>
     </div>
-  @if (email?.touched) {
-          @if(email?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Email is required.
-              </div>
-            }
-            @if(email?.errors?.['email']) {
-              <div class="alert alert-danger" role="alert">
-                Please enter a valid email address.
-              </div>
-            }
-    }
-  <!-- username -->
-  <div class="mb-3">
-    <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" id="username" formControlName="username" name="username"
-           placeholder="Enter your username">
-  </div>
-@if(username?.touched) {
-          @if(username?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Username is required.
-              </div>
-            }
-            @if(username?.errors?.['pattern']) {
-              <div class="alert alert-danger" role="alert">
-                Username must be at least 3 characters long.
-              </div>
-            }
-   }
 
+    <div class="card-body">
+      <!-- Debug JSON - consider removing in production -->
+      <!-- <div class="debug-info mb-4" *ngIf="showDebug">
+        <button class="btn btn-sm btn-outline-secondary mb-2" (click)="toggleDebug()">Hide Debug</button>
+        <pre>{{ UpdatedUserForm?.value | json }}</pre>
+      </div> -->
+      <!-- <button class="btn btn-sm btn-outline-primary mb-4" *ngIf="!showDebug" (click)="toggleDebug()">Show Debug</button> -->
 
+      <div class="container-fluid" *ngIf="UpdatedUserForm">
+        <form [formGroup]="UpdatedUserForm">
+          <div class="row">
+            <!-- Left Column - Personal Info -->
+            <div class="col-md-6">
+              <h4 class="section-title">{{getText('PersonalInformation')}}</h4>
 
-<!-- password -->
-  <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password"
-    formControlName="password" name="password"
-  placeholder="Enter your password">
-  </div>
-@if(password?.touched) {
-          @if(password?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Password is required.
+              <!-- Profile Picture Section -->
+              <div class="form-group mb-4">
+                <label class="form-label">{{getText('profilepicture')}}</label>
+                <div class="d-flex align-items-center">
+                  <div class="profile-pic-container me-3">
+                    @if (previewUrl) {
+                    <img [src]="previewUrl" class="profile-pic" alt="Profile preview">
+                    } @else if (userData.image) {
+                    <img [src]="userData.image" class="profile-pic" alt="User profile">
+                    } @else {
+                    <img src="assets/default-avatar.png" class="profile-pic" alt="Default avatar">
+                    }
+                  </div>
+                  <div class="btn-group">
+                    <input type="file" id="profilePic" (change)="onFileSelected($event)" accept="image/*"
+                      class="d-none">
+                    <label for="profilePic" class="btn btn-outline-primary">
+                      <i class="fas fa-upload me-2"></i>{{getText('change')}}
+                    </label>
+                    @if (userData.image || previewUrl) {
+                    <button type="button" class="btn btn-outline-danger" (click)="removeImage()">
+                      <i class="fas fa-trash me-2"></i>{{getText('remove')}}
+                    </button>
+                    }
+                  </div>
+                </div>
+                <small class="form-text text-muted">JPG, PNG up to 2MB</small>
               </div>
-            }
-            @if(password?.errors?.['pattern']) {
-              <div class="alert alert-danger" role="alert">
-                Password must be at least 6 characters long and include uppercase letters, lowercase letters, numbers, and special characters.
+
+              <!-- First Name -->
+              <div class="mb-3">
+                <label for="firstName" class="form-label">{{getText('firstName')}}</label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName"
+                  [ngClass]="{'is-invalid': firstName?.invalid && (firstName?.dirty || firstName?.touched)}">
+                @if (firstName?.touched) {
+                @if(firstName?.errors?.['required']) {
+                <div class="invalid-feedback">First name is required.</div>
+                }
+                @if(firstName?.errors?.['pattern']) {
+                <div class="invalid-feedback">First name must be at least 3 characters long.</div>
+                }
+                }
               </div>
-            }
-   }
-<!-- address -->
- <div formGroupName="address" class="mb-3">
-  <!-- address -->
-  <div class="mb-3">
-    <label for="address" class="form-label">Address</label>
-    <input type="text" class="form-control" id="address"
-    formControlName="address" name="address"
-  placeholder="Enter your address">
-  </div>
-  @if (address?.touched) {
-          @if(address?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                Address is required.
+
+              <!-- Maiden Name -->
+              <div class="mb-3">
+                <label for="maidenName" class="form-label">{{getText('maidenName')}}</label>
+                <input type="text" class="form-control" id="maidenName" formControlName="maidenName"
+                  [ngClass]="{'is-invalid': maidenName?.invalid && (maidenName?.dirty || maidenName?.touched)}">
+                @if (maidenName?.touched) {
+                @if(maidenName?.errors?.['required']) {
+                <div class="invalid-feedback">Maiden name is required.</div>
+                }
+                @if(maidenName?.errors?.['pattern']) {
+                <div class="invalid-feedback">Maiden name must be at least 3 characters long.</div>
+                }
+                }
               </div>
-            }
-   }
-  <!-- city -->
-  <div class="mb-3">
-    <label for="city" class="form-label">City</label>
-    <input type="text" class="form-control" id="city"
-    formControlName="city" name="city"
-    placeholder="Enter your city">
-  </div>
-  @if (city?.touched) {
-          @if(city?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                City is required.
+
+              <!-- Last Name -->
+              <div class="mb-3">
+                <label for="lastName" class="form-label">{{getText('lastName')}}</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                  [ngClass]="{'is-invalid': lastName?.invalid && (lastName?.dirty || lastName?.touched)}">
+                @if (lastName?.touched) {
+                @if(lastName?.errors?.['required']) {
+                <div class="invalid-feedback">Last name is required.</div>
+                }
+                @if(lastName?.errors?.['pattern']) {
+                <div class="invalid-feedback">Last name must be at least 3 characters long.</div>
+                }
+                }
               </div>
-            }
-   }
-  <!-- state -->
-  <div class="mb-3">
-    <label for="state" class="form-label">State</label>
-    <input type="text" class="form-control" id="state"
-    formControlName="state" name="state"
-    placeholder="Enter your state">
-  </div>
-  @if (state?.touched) {
-          @if(state?.errors?.['required']) {
-              <div class="alert alert-danger" role="alert">
-                State is required.
+
+              <!-- Age and Gender -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="age" class="form-label">{{getText('age')}}</label>
+                  <input type="number" class="form-control" id="age" formControlName="age"
+                    [ngClass]="{'is-invalid': age?.invalid && (age?.dirty || age?.touched)}">
+                  @if (age?.touched) {
+                  @if(age?.errors?.['required']) {
+                  <div class="invalid-feedback">Age is required.</div>
+                  }
+                  }
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="gender" class="form-label">{{getText('gender')}}</label>
+                  <select class="form-select" id="gender" formControlName="gender"
+                    [ngClass]="{'is-invalid': gender?.invalid && (gender?.dirty || gender?.touched)}">
+                    <option value="">Select your gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                  @if (gender?.touched) {
+                  @if(gender?.errors?.['required']) {
+                  <div class="invalid-feedback">Gender is required.</div>
+                  }
+                  }
+                </div>
               </div>
-            }
-   }
-    <!-- Profile Picture -->
-        <div class="form-group file-upload">
-          <!-- <label>Profile Picture</label> -->
-          <div class="upload-container">
-            <input type="file" id="profilePic" (change)="onFileSelected($event)" accept="image/*">
-            <label for="profilePic" class="upload-btn">
-              <i class="fas fa-camera"></i> Choose Img
-            </label>
-            @if (previewUrl) {
-            <div class="image-preview">
-              <img [src]="previewUrl" alt="Profile preview">
             </div>
-            }
+
+            <!-- Right Column - Contact & Account Info -->
+            <div class="col-md-6">
+              <h4 class="section-title">{{getText('contactinformation')}}</h4>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">{{getText('email')}}</label>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                  [ngClass]="{'is-invalid': email?.invalid && (email?.dirty || email?.touched)}">
+                @if (email?.touched) {
+                @if(email?.errors?.['required']) {
+                <div class="invalid-feedback">Email is required.</div>
+                }
+                @if(email?.errors?.['pattern']) {
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+                }
+                @if(IsEmailExistence()){
+                <div class="invalid-feedback">This email is not available</div>
+                }
+                }
+              </div>
+
+              <!-- Phone -->
+              <div class="mb-3">
+                <label for="phone" class="form-label">{{getText('phone')}}</label>
+                <input type="text" class="form-control" id="phone" formControlName="phone"
+                  [ngClass]="{'is-invalid': phone?.invalid && (phone?.dirty || phone?.touched)}">
+                @if (phone?.touched) {
+                @if(phone?.errors?.['required']) {
+                <div class="invalid-feedback">Phone number is required.</div>
+                }
+                @if(phone?.errors?.['pattern']) {
+                <div class="invalid-feedback">Phone number must be a valid format like <strong>+123 456 7890</strong>.
+                </div>
+                }
+                }
+              </div>
+
+              <!-- Address -->
+              <div formGroupName="address">
+                <div class="mb-3">
+                  <label for="address" class="form-label">{{getText('address')}}</label>
+                  <input type="text" class="form-control" id="address" formControlName="address"
+                    [ngClass]="{'is-invalid': address?.invalid && (address?.dirty || address?.touched)}">
+                  @if (address?.touched) {
+                  @if(address?.errors?.['required']) {
+                  <div class="invalid-feedback">Address is required.</div>
+                  }
+                  }
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="city" class="form-label">{{getText('city')}}</label>
+                    <input type="text" class="form-control" id="city" formControlName="city"
+                      [ngClass]="{'is-invalid': city?.invalid && (city?.dirty || city?.touched)}">
+                    @if (city?.touched) {
+                    @if(city?.errors?.['required']) {
+                    <div class="invalid-feedback">City is required.</div>
+                    }
+                    }
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="state" class="form-label">{{getText('state')}}</label>
+                    <input type="text" class="form-control" id="state" formControlName="state"
+                      [ngClass]="{'is-invalid': state?.invalid && (state?.dirty || state?.touched)}">
+                    @if (state?.touched) {
+                    @if(state?.errors?.['required']) {
+                    <div class="invalid-feedback">State is required.</div>
+                    }
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="section-title mt-4">{{getText('account_information')}}</h4>
+
+              <!-- Username -->
+              <div class="mb-3">
+                <label for="username" class="form-label">{{getText('Username')}}</label>
+                <input type="text" class="form-control" id="username" formControlName="username"
+                  [ngClass]="{'is-invalid': username?.invalid && (username?.dirty || username?.touched)}">
+                @if(username?.touched) {
+                @if(username?.errors?.['required']) {
+                <div class="invalid-feedback">Username is required.</div>
+                }
+                @else if(username?.errors?.['pattern']) {
+                <div class="invalid-feedback">Username must be at least 3 characters long.</div>
+                } @else if(username?.errors?.['maxlength']) {
+                <div class="invalid-feedback">Username must be at most 20 characters.</div>
+                }
+                @else if (IsUsernameExistence()) {
+                <div class="invalid-feedback">This Username is not available.</div>
+                }
+                }
+              </div>
+
+              <!-- Password -->
+              <div class="mb-3">
+                <label for="password" class="form-label">{{getText('password')}}</label>
+                <div class="input-group">
+                  <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password"
+                    formControlName="password"
+                    [ngClass]="{'is-invalid': password?.invalid && (password?.dirty || password?.touched)}">
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                    <i class="fas" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
+                  </button>
+                </div>
+                @if(password?.touched) {
+                @if(password?.errors?.['required']) {
+                <div class="invalid-feedback">Password is required.</div>
+                }
+                @if(password?.errors?.['pattern']) {
+                <div class="invalid-feedback">
+                  Password must be at least 6 characters with uppercase, lowercase, number, and special character.
+                </div>
+                }
+                }
+              </div>
+            </div>
           </div>
-        </div>
 
-
-
-
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" routerLink="/account">
+              <i class="fas fa-arrow-left me-2"></i>{{getText('cancel')}}
+            </button>
+            <button type="button" class="btn btn-primary" (click)="uploadImageAndRegister()"
+              [disabled]="UpdatedUserForm.invalid">
+              <i class="fas fa-save me-2"></i>{{getText('update_account')}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <button type="button" class="btn btn-secondary w-100 mt-2"  (click)="uploadImageAndRegister()" >Updated</button>
-
-</form>
 </div>
-

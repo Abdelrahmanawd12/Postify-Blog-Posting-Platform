@@ -90,10 +90,35 @@
       "id": "bLFakjr"
     },
     {
-      "email": "bodeawad155@gmail.com",
-      "password": "$2a$10$xxvzHa7GT70m5KmdSsGN2OhZDD3/mnYZ7777MWYT1Bmpv7BAdb69e",
+      "email": "bodyawad155@gmail.com",
+      "password": "$2a$10$4580nlo2T1inX03lBePAu.A7AztENrisWBemsjALpMxKx6vtL9nDe",
       "phone": "01094960532",
       "username": "Abdo_awad",
+      "firstName": "Abdelrahman",
+      "lastName": "Awad",
+      "maidenName": "Mohamed",
+      "age": 25,
+      "gender": "male",
+      "image": "https://i.ibb.co/HpgF8VVF/2020-11-05-18-19-IMG-2465.jpg",
+      "address": {
+        "address": "Egypt /maadi / street 233",
+        "city": "mahalla",
+        "state": "Egypt"
+      },
+      "postsLiked": [
+        "lomf0Ae",
+        "1eZElon"
+      ],
+      "PostsDisLiked": [
+        "1eZElon"
+      ],
+      "id": "3KJ6w7_"
+    },
+    {
+      "email": "bodeawad155@gmail.com",
+      "password": "$2a$10$VL/3sxK7eDArVX6aOKe16eGhT9gX.wJa0cPTd4nUtUbWMBvNw2qUa",
+      "phone": "01094960532",
+      "username": "Abdo_awad12",
       "firstName": "",
       "lastName": "",
       "maidenName": "",
@@ -105,9 +130,18 @@
         "city": "",
         "state": ""
       },
-      "postsLiked": [],
-      "PostsDisLiked": [],
-      "id": "3KJ6w7_"
+      "postsLiked": [
+        "FcBX2RO",
+        "1eZElon",
+        "9cimmf-",
+        "h3W7Ydg",
+        "22NxTzO"
+      ],
+      "PostsDisLiked": [
+        "FcBX2RO",
+        "9cimmf-"
+      ],
+      "id": "PeDA_8q"
     }
   ],
   "posts": [
@@ -122,9 +156,71 @@
         "likes": 1,
         "dislikes": 2
       },
-      "views": 2,
+      "views": 6,
       "userId": "sKylFOv",
-      "imageUrl": "https://i.ibb.co/G3BDVbL2/download-1.jpg"
+      "imageUrl": "https://i.ibb.co/G3BDVbL2/download-1.jpg",
+      "comments": [
+        {
+          "id": "zbwtzh",
+          "userId": "PeDA_8q",
+          "body": "hi",
+          "likes": 0
+        },
+        {
+          "id": "xk2ooy",
+          "userId": "PeDA_8q",
+          "body": "hello",
+          "likes": 0
+        },
+        {
+          "id": "ukv94o",
+          "userId": "PeDA_8q",
+          "body": "how are y",
+          "likes": 0
+        },
+        {
+          "id": "e14078",
+          "userId": "PeDA_8q",
+          "body": "lolo",
+          "likes": 0
+        },
+        {
+          "id": "3ktuua",
+          "userId": "PeDA_8q",
+          "body": "lolo\nmnsknm",
+          "likes": 0
+        },
+        {
+          "id": "qu1gn4",
+          "userId": "PeDA_8q",
+          "body": "lolo\nmnsknm\n",
+          "likes": 0
+        },
+        {
+          "id": "hd3opa",
+          "userId": "PeDA_8q",
+          "body": "lolo\nmnsknm\n\n",
+          "likes": 0
+        },
+        {
+          "id": "rivilf",
+          "userId": "PeDA_8q",
+          "body": "kkak",
+          "likes": 0
+        },
+        {
+          "id": "850d02",
+          "userId": "PeDA_8q",
+          "body": "kkak\nll;l",
+          "likes": 0
+        },
+        {
+          "id": "82v8bl",
+          "userId": "PeDA_8q",
+          "body": "kkak\nll;l\n",
+          "likes": 0
+        }
+      ]
     },
     {
       "title": "dmlksdm",
@@ -133,13 +229,41 @@
         "english"
       ],
       "reactions": {
-        "likes": 0,
+        "likes": 1,
         "dislikes": 0
       },
-      "views": 1,
+      "views": 4,
       "userId": "bLFakjr",
       "imageUrl": "",
-      "id": "lomf0Ae"
+      "id": "lomf0Ae",
+      "comments": [
+        {
+          "id": "1",
+          "userId": "sKylFOv",
+          "body": "this is a comment",
+          "likes": 0,
+          "isEditing": false
+        },
+        {
+          "id": "2",
+          "userId": "bLFakjr",
+          "body": "this is another comment",
+          "likes": 0,
+          "isEditing": false
+        },
+        {
+          "id": "12crw9",
+          "userId": "3KJ6w7_",
+          "body": "kjk",
+          "likes": 0
+        },
+        {
+          "id": "pw1nl5",
+          "userId": "3KJ6w7_",
+          "body": "mk",
+          "likes": 0
+        }
+      ]
     },
     {
       "title": "mmdskdmks",
@@ -148,13 +272,115 @@
         "English"
       ],
       "reactions": {
+        "likes": 2,
+        "dislikes": 1
+      },
+      "views": 7,
+      "userId": "bLFakjr",
+      "imageUrl": "",
+      "id": "1eZElon",
+      "comments": [
+        {
+          "id": "vn4lkc",
+          "userId": "3KJ6w7_",
+          "body": "No",
+          "likes": 0,
+          "isEditing": false
+        }
+      ]
+    },
+    {
+      "title": "hello world awad",
+      "body": "awad __awad",
+      "tags": [
+        ""
+      ],
+      "reactions": {
+        "likes": 1,
+        "dislikes": 1
+      },
+      "views": 30,
+      "userId": "3KJ6w7_",
+      "imageUrl": "https://i.ibb.co/tMGTkDkD/712x384-EN-3.jpg",
+      "id": "FcBX2RO",
+      "IsUpdated": true,
+      "comments": [
+        {
+          "id": "1",
+          "userId": "3KJ6w7_",
+          "body": "This is a comment on the hello world post.",
+          "likes": 0,
+          "isEditing": false
+        },
+        {
+          "id": "2025-07-30T01:49:46.716Z",
+          "userId": "3KJ6w7_",
+          "body": "hello world\n",
+          "likes": 0,
+          "isEditing": false
+        },
+        {
+          "id": "2025-07-30T01:49:59.403Z",
+          "userId": "3KJ6w7_",
+          "body": "how are you\n",
+          "likes": 0,
+          "isEditing": false
+        },
+        {
+          "id": "cv3tia",
+          "userId": "3KJ6w7_",
+          "body": "hello",
+          "likes": 0
+        },
+        {
+          "id": "d8b157",
+          "userId": "3KJ6w7_",
+          "body": "hi",
+          "likes": 0
+        },
+        {
+          "id": "i1e9qz",
+          "userId": "3KJ6w7_",
+          "body": "menna",
+          "likes": 0
+        },
+        {
+          "id": "p9buwv",
+          "userId": "3KJ6w7_",
+          "body": "hello this is my last comment ....\n",
+          "likes": 0,
+          "isEditing": false
+        },
+        {
+          "id": "w06yvl",
+          "userId": "PeDA_8q",
+          "body": "mlm",
+          "likes": 0,
+          "isEditing": false
+        },
+        {
+          "id": "3xl122",
+          "userId": "PeDA_8q",
+          "body": "km",
+          "likes": 0
+        }
+      ]
+    },
+    {
+      "title": "ls,l,msls,",
+      "body": "l,l,alsmls",
+      "tags": [
+        ""
+      ],
+      "reactions": {
         "likes": 0,
         "dislikes": 0
       },
-      "views": 1,
-      "userId": "bLFakjr",
+      "views": 0,
+      "userId": "PeDA_8q",
       "imageUrl": "",
-      "id": "1eZElon"
+      "Comments": [],
+      "id": "_6aReJI"
     }
   ]
 }

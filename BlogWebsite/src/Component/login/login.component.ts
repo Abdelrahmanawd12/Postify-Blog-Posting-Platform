@@ -7,60 +7,61 @@ import { LoginService } from '../../Services/login.service';
 import Swal from 'sweetalert2';
 import { ILoginResponse } from '../../Models/ILoginResponse';
 
-
 @Component({
   selector: 'app-login',
-  imports: [RouterLink,FormsModule],
+  imports: [RouterLink, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-userLogin:IUser ={} as IUser;
-rememberMe:boolean = false;
-constructor(private _LoginService:LoginService,private _router:Router){}
+  userLogin: IUser = {} as IUser;
+  rememberMe: boolean = false;
+  constructor(private _LoginService: LoginService, private _router: Router) {}
 
-Login(){
-  this._LoginService.loginUser({
-    email: this.userLogin.email,
-    password: this.userLogin.password
-  }).subscribe({
-    next: (res:ILoginResponse) => {
-      console.log('Login response:', res);
-      localStorage.setItem("token", res.accessToken);
-      localStorage.setItem("user", JSON.stringify(res.user));
-      localStorage.setItem("isLoggedIn","true");
+  Login() {
+    this._LoginService
+      .loginUser({
+        email: this.userLogin.email,
+        password: this.userLogin.password,
+      })
+      .subscribe({
+        next: (res: ILoginResponse) => {
+          console.log('Login response:', res);
+          localStorage.setItem('token', res.accessToken);
+          localStorage.setItem('user', JSON.stringify(res.user));
+          localStorage.setItem('isLoggedIn', 'true');
 
-            if (this.rememberMe) {
-          document.cookie = "user=" + encodeURIComponent(JSON.stringify(res.user)) + "; max-age=31536000; path=/";
-        document.cookie = `token=${res.accessToken}; max-age=31536000; path=/`;
-        } else {
-          document.cookie = "user=; max-age=0; path=/";
-          document.cookie = "token=; max-age=0; path=/";
-        }
+          if (this.rememberMe) {
+            document.cookie =
+              'user=' +
+              encodeURIComponent(JSON.stringify(res.user)) +
+              '; max-age=31536000; path=/';
+            document.cookie = `token=${res.accessToken}; max-age=31536000; path=/`;
+          } else {
+            document.cookie = 'user=; max-age=0; path=/';
+            document.cookie = 'token=; max-age=0; path=/';
+          }
 
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Login successful!',
+          });
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Login successful!',
+          this._router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: 'Invalid email or password.',
+          });
+        },
       });
-
-      this._router.navigate(['/home']);
-    },
-    error: (err) => {
-      console.error(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: 'Invalid email or password.'
-      });
-    }
-  });
+  }
 }
-}
- // this._LoginService.login();
-
-
+// this._LoginService.login();
 
 //   this._LoginService.getUserByEmailAndPassword(this.userLogin.email,this.userLogin.password).subscribe({
 //     next:(data:IUser[])=>{
@@ -78,7 +79,6 @@ Login(){
 //           document.cookie = "user=; max-age=0"; // Expire cookie
 //         }
 //         this._router.navigate(["/home"]);
-
 
 //       }else{
 //         alert("Invalid Email or Password");

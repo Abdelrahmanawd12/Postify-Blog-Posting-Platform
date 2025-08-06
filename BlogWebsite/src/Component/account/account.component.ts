@@ -6,6 +6,10 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ModalService } from '../../Services/modal.service';
 import { ToastService } from '../../Services/toast.service';
+import { Store } from '@ngrx/store';
+import { LanguageService } from '../../Services/language.service';
+import { Observable } from 'rxjs';
+import { LanguageAction } from '../../Store/Language/Language.Action';
 
 @Component({
   selector: 'app-account',
@@ -19,11 +23,19 @@ posts: IPosts[] = [] as IPosts[];
 
 
 
-constructor(private postsService: PostsService,private _Router: Router,private _modal:ModalService, private toast :ToastService) {
+constructor(private postsService: PostsService,private _Router: Router,private _modal:ModalService, private toast :ToastService,private translator:LanguageService,
+    private store:Store<{language: 'en' | 'ar'}>) {
   // Initialization logic can go here if needed
   this.user = JSON.parse(localStorage.getItem("user") || '{}');
+      // Initialization logic can go here if needed
+    this.Language$ = this.store.select("language");
+    this.Language$.subscribe((lang) => {
+      this.currentlang = lang as 'en' | 'ar';
+      this.translator.currentlang = this.currentlang;
+    });
 }
-
+  Language$=new Observable<string>;
+  currentlang!: 'en' | 'ar';
 ngOnInit(): void {
   this.getPostsByUserId();
 
@@ -55,15 +67,16 @@ getPostsByUserId() {
   });
  }
 
-updatePost(id: string) {
-  this._Router.navigateByUrl(`/updatepost/${id}`);
-}
+
 goToUpdateUser(id:string){
   this._Router.navigateByUrl(`/updateuser/${id}`);
 
 }
 confirmModalAction() {
   this._modal.confirm();
+}
+updatePost(id: string) {
+  this._Router.navigateByUrl(`/updatepost/${id}`);
 }
 deletePost(id: string) {
   // Show confirmation modal before deleting
@@ -80,5 +93,14 @@ deletePost(id: string) {
       }
     });
   });
+}
+getText(key: keyof typeof this.translator['texts']['en']) {
+  return this.translator.getText(key);
+}
+
+
+  ChangeLanguage(){
+this.store.dispatch(LanguageAction({lang:(this.currentlang==="en")?"ar":"en"}))
+
 }
 }

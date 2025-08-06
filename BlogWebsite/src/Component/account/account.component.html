@@ -1,7 +1,7 @@
 <div class="account-container">
   <!-- Main content area for posts -->
   <div class="posts-column">
-    <h1 class="posts-title">Your Posts</h1>
+    <h1 class="posts-title">{{getText('Your_posts')}}</h1>
 
     <div class="posts-grid">
       @for(p of posts; track p.id) {
@@ -9,8 +9,9 @@
         <div class="card-body">
           <!-- User info -->
           <div class="user-info">
+
             <img class="user-avatar" [src]="user.image" alt="User avatar">
-            <span class="user-name">{{user.firstName}} {{user.lastName}}</span>
+            <span class="user-name">{{user.username}}</span>
           </div>
 
           <!-- Post content -->
@@ -37,13 +38,13 @@
           <!-- Action buttons -->
           <div class="post-actions">
             <button class="btn btn-update" (click)="updatePost(p.id)">
-              <i class="fa-regular fa-pen-to-square"></i> Edit
+              <i class="fa-regular fa-pen-to-square"></i> {{getText('update')}}
             </button>
             <button class="btn btn-delete" (click)="deletePost(p.id)">
-              <i class="fa-regular fa-trash-can"></i> Delete
+              <i class="fa-regular fa-trash-can"></i> {{getText('delete')}}
             </button>
             <button class="btn btn-view" (click)="viewPost(p.id)">
-              <i class="fa-regular fa-eye"></i> View
+              <i class="fa-regular fa-eye"></i> {{getText('Viewpost')}}
             </button>
           </div>
         </div>
@@ -55,11 +56,12 @@
   <!-- Fixed account info sidebar -->
   <div class="account-sidebar ">
     <div class="account-profile">
-      <h2 class="account-title">Account Info</h2>
+      <h2 class="account-title">{{getText('Account_info')}}</h2>
       <div class="account-avatar-container">
         @if(user.image) {
           <img class="account-avatar" [src]="user.image" alt="User avatar">
-        } @else {
+        }
+        @else {
           <img class="account-avatar" src="assets/default-avatar.png" alt="Default avatar">
         }
 
@@ -67,33 +69,33 @@
 
       <div class="account-details">
         <div class="account-detail">
-          <span class="detail-label">Name:</span>
+          <span class="detail-label">{{getText('Name')}}:</span>
           <span class="detail-value">{{user.firstName}} {{user.lastName}}</span>
         </div>
 
         <div class="account-detail">
-          <span class="detail-label">Username:</span>
+          <span class="detail-label">{{getText('Username')}}:</span>
           <span class="detail-value">{{user.username}}</span>
         </div>
 
         <div class="account-detail">
-          <span class="detail-label">Email:</span>
+          <span class="detail-label">{{getText('Email')}}:</span>
           <span class="detail-value">{{user.email}}</span>
         </div>
 
         <div class="account-detail">
-          <span class="detail-label">Phone:</span>
+          <span class="detail-label">{{getText('Phone')}}:</span>
           <span class="detail-value">{{user.phone}}</span>
         </div>
 
         <div class="account-detail">
-          <span class="detail-label">Location:</span>
-          <span class="detail-value">{{user.address.city}}, {{user.address.state}}</span>
+          <span class="detail-label">{{getText('Location')}}:</span>
+          <span class="detail-value">{{user.address.city}} {{user.address.state}}</span>
         </div>
       </div>
 
       <button class="btn btn-edit-profile" (click)="goToUpdateUser(user.id)">
-        <i class="fa-regular fa-pen-to-square"></i> Edit Profile
+        <i class="fa-regular fa-pen-to-square"></i> {{getText('edit_profile')}}
       </button>
     </div>
   </div>
@@ -102,7 +104,7 @@
 
 
 
-<!-- 
+<!--
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true" #confirmModal>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
